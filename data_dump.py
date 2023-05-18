@@ -1,12 +1,12 @@
-import pymongo # pip install pymongo
+import pymongo 
 import pandas as pd
 import json
 
-client = pymongo.MongoClient("mongodb+srv://vinod:vinod@cluster0.sttg8mr.mongodb.net/?retryWrites=true&w=majority")
+client = pymongo.MongoClient("mongodb+srv://vinod:vinod@cluster0.f6mhnlm.mongodb.net/?retryWrites=true&w=majority")
 
-DATA_FILE_PATH="/home/vinod/projects/retail_transaction_pred/Online_Retail.csv"
-DATABASE_NAME = "Retail_transaction"
-COLLECTION_NAME = "retail_trans_pred"
+DATA_FILE_PATH="/home/vinod/projects/retail_transaction_pred/final_data.csv"
+DATABASE_NAME = "online_retail"
+COLLECTION_NAME = "online_retail"
 
 
 if __name__=="__main__":
@@ -14,8 +14,10 @@ if __name__=="__main__":
     print(f"Rows and columns: {df.shape}")
 
     df.reset_index(drop = True, inplace = True)
+    df.drop(['Unnamed: 0'], axis=1, inplace=True)
 
-    json_record = list(json.loads(df.T.to_json()).values())
+    records = json.loads(df.T.to_json()).values()
+    json_record = list(records)
     print(json_record[0])
 
-    client[DATABASE_NAME][COLLECTION_NAME].insert_many(json_record)
+    #client[DATABASE_NAME][COLLECTION_NAME].insert_many(json_record)
