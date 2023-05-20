@@ -20,4 +20,4 @@ if __name__=="__main__":
     json_record = list(records)
     print(json_record[0])
 
-    #client[DATABASE_NAME][COLLECTION_NAME].insert_many(json_record)
+    client[DATABASE_NAME][COLLECTION_NAME].insert_many(json_record)

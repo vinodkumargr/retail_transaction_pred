@@ -6,18 +6,21 @@ from Retail_transcation import config
 import yaml
 
 
-def get_as_df(self, database_name:str , collection_name:str)-> pd.DataFrame:
+def get_as_df(database_name:str , collection_name:str)-> pd.DataFrame:
     try:
         logging.info("Reading data from mongoDB")
         df = pd.DataFrame(list(config.mongo_client[database_name][collection_name].find()))
         
-        logging.info("Found data shape : {df.shape}")
+        logging.info(f"Found data shape : {df.shape}")
         if "_id" in df.columns:
-            df.drop(['_id'], axis=1, inplsce=True)
+            df.drop(['_id'], axis=1, inplace=True)
             logging.info("Found _id and dropped")
-        logging.info("data shape : {df.shape}")
+        logging.info(f"data shape : {df.shape}")
 
         return df
+    
+    except Exception as e:
+        print(e,sys)
     
 
 def write_into_yaml(self, file_path , data : dict):
