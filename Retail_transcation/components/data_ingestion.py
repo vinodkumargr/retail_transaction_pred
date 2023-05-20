@@ -57,7 +57,7 @@ class DataIngestion:
             return data_ingestion_artifact
 
         except Exception as e:
-            print(e,sys)
+            raise RetailException(e,sys)
 
 
 

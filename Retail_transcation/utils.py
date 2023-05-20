@@ -20,7 +20,7 @@ def get_as_df(database_name:str , collection_name:str)-> pd.DataFrame:
         return df
     
     except Exception as e:
-        print(e,sys)
+        raise RetailException(e,sys)
     
 
 def write_into_yaml(self, file_path , data : dict):

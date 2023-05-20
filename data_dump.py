@@ -1,6 +1,8 @@
 import pymongo 
 import pandas as pd
 import json
+from Retail_transcation.exception import RetailException
+from Retail_transcation.logger import logging
 
 client = pymongo.MongoClient("mongodb+srv://vinod:vinod@cluster0.f6mhnlm.mongodb.net/?retryWrites=true&w=majority")
 
@@ -10,14 +12,17 @@ COLLECTION_NAME = "online_retail"
 
 
 if __name__=="__main__":
-    df = pd.read_csv(DATA_FILE_PATH)
-    print(f"Rows and columns: {df.shape}")
+    try:
+        df = pd.read_csv(DATA_FILE_PATH)
+        print(f"Rows and columns: {df.shape}")
 
-    df.reset_index(drop = True, inplace = True)
-    df.drop(['Unnamed: 0'], axis=1, inplace=True)
+        df.reset_index(drop = True, inplace = True)
+        df.drop(['Unnamed: 0'], axis=1, inplace=True)
 
-    records = json.loads(df.T.to_json()).values()
-    json_record = list(records)
-    print(json_record[0])
+        records = json.loads(df.T.to_json()).values()
+        json_record = list(records)
+        print(json_record[0])
 
-    client[DATABASE_NAME][COLLECTION_NAME].insert_many(json_record)
+        client[DATABASE_NAME][COLLECTION_NAME].insert_many(json_record)
+    except Exception as e:
+        raise RetailException(e,sys)
