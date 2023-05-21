@@ -27,9 +27,6 @@ class DataIngestion:
             collection_name=self.data_ingestion_config.collection_name
             logging.info("got data from mongodb")
 
-            logging.info("preparing for replace na with NAN")
-            df.replace(to_replace = "na", value=np.NAN, inplace=True)
-
             logging.info("creating feature store dir")
             feature_Store_dir = os.path.dirname(self.data_ingestion_config.feature_store_path)
             os.makedirs(feature_Store_dir,exist_ok=True)

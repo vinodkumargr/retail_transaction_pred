@@ -1,0 +1,124 @@
+[2023-05-21 21:36:16,678] root - INFO - printing dict data : {'database_name': 'online_retail', 'collection_name': 'online_retail', 'data_ingestion_dir': '/home/vinod/projects/retail_transaction_pred/artifacts/data_ingestion', 'feature_store_path': '/home/vinod/projects/retail_transaction_pred/artifacts/data_ingestion/feature_store/Online_Retail.csv', 'train_file_path': '/home/vinod/projects/retail_transaction_pred/artifacts/data_ingestion/data_split/train.csv', 'test_file_path': '/home/vinod/projects/retail_transaction_pred/artifacts/data_ingestion/data_split/test.csv'}
+[2023-05-21 21:36:16,678] root - INFO - Starting data ingestion
+[2023-05-21 21:36:16,678] root - INFO - Reading data from mongoDB
+[2023-05-21 21:39:07,849] root - INFO - Found data shape : (541909, 9)
+[2023-05-21 21:39:07,956] root - INFO - Found _id and dropped
+[2023-05-21 21:39:07,956] root - INFO - data shape : (541909, 8)
+[2023-05-21 21:39:07,956] root - INFO - got data from mongodb
+[2023-05-21 21:39:07,956] root - INFO - creating feature store dir
+[2023-05-21 21:39:07,957] root - INFO - storing into feature store dir
+[2023-05-21 21:39:09,466] root - INFO - spliting data into train and test
+[2023-05-21 21:39:09,693] root - INFO - create dataset_dir if not exist
+[2023-05-21 21:39:09,693] root - INFO - save dataset to feature store after split
+[2023-05-21 21:39:12,085] root - INFO - data validation started :
+[2023-05-21 21:39:12,085] root - INFO - ____________________dropping null values, axis=1_________________________
+[2023-05-21 21:39:13,210] root - INFO - replaced na with np.NAN
+[2023-05-21 21:39:13,210] root - INFO - dropping null values in base_df, axis=1
+[2023-05-21 21:39:13,305] root - INFO - now shape of df : (541909, 8)
+[2023-05-21 21:39:13,305] root - INFO - columns : Index(['InvoiceNo', 'StockCode', 'Description', 'Quantity', 'InvoiceDate',
+       'UnitPrice', 'CustomerID', 'Country'],
+      dtype='object')
+[2023-05-21 21:39:13,305] root - INFO - dropped null values in base_df
+[2023-05-21 21:39:13,305] root - INFO - dropping null values in train and test data,axis-1
+[2023-05-21 21:39:13,825] root - INFO - now shape of df : (406431, 8)
+[2023-05-21 21:39:13,826] root - INFO - columns : Index(['InvoiceNo', 'StockCode', 'Description', 'Quantity', 'InvoiceDate',
+       'UnitPrice', 'CustomerID', 'Country'],
+      dtype='object')
+[2023-05-21 21:39:13,983] root - INFO - now shape of df : (135478, 8)
+[2023-05-21 21:39:13,983] root - INFO - columns : Index(['InvoiceNo', 'StockCode', 'Description', 'Quantity', 'InvoiceDate',
+       'UnitPrice', 'CustomerID', 'Country'],
+      dtype='object')
+[2023-05-21 21:39:13,983] root - INFO - dropped null val ues in train and test df
+[2023-05-21 21:39:13,983] root - INFO - ____________________dropping null values, axis=0_________________________
+[2023-05-21 21:39:13,983] root - INFO - dropping null values in base_df, axsi-0
+[2023-05-21 21:39:14,123] root - INFO - now shape of df : (540455, 8)
+[2023-05-21 21:39:14,123] root - INFO - columns : Index(['InvoiceNo', 'StockCode', 'Description', 'Quantity', 'InvoiceDate',
+       'UnitPrice', 'CustomerID', 'Country'],
+      dtype='object')
+[2023-05-21 21:39:14,124] root - INFO - dropping null values in train and test df, axis-0
+[2023-05-21 21:39:14,233] root - INFO - now shape of df : (405357, 8)
+[2023-05-21 21:39:14,234] root - INFO - columns : Index(['InvoiceNo', 'StockCode', 'Description', 'Quantity', 'InvoiceDate',
+       'UnitPrice', 'CustomerID', 'Country'],
+      dtype='object')
+[2023-05-21 21:39:14,273] root - INFO - now shape of df : (135098, 8)
+[2023-05-21 21:39:14,274] root - INFO - columns : Index(['InvoiceNo', 'StockCode', 'Description', 'Quantity', 'InvoiceDate',
+       'UnitPrice', 'CustomerID', 'Country'],
+      dtype='object')
+[2023-05-21 21:39:14,274] root - INFO - dropped null values, axis=0
+[2023-05-21 21:39:14,274] root - INFO - ____________________dropping unwanted cols, axis=1_________________________
+[2023-05-21 21:39:14,274] root - INFO - dropping null values in base_df, axsi-0
+[2023-05-21 21:39:14,274] root - INFO - found unwanted columns: ['InvoiceNo', 'StockCode', 'CustomerID']
+[2023-05-21 21:39:14,289] root - INFO - dropped unwanted columns: ['InvoiceNo', 'StockCode', 'CustomerID']
+[2023-05-21 21:39:14,289] root - INFO - data shape: (540455, 5)
+[2023-05-21 21:39:14,289] root - INFO - dropping null values in train and test df, axis-0
+[2023-05-21 21:39:14,289] root - INFO - found unwanted columns: ['InvoiceNo', 'StockCode', 'CustomerID']
+[2023-05-21 21:39:14,305] root - INFO - dropped unwanted columns: ['InvoiceNo', 'StockCode', 'CustomerID']
+[2023-05-21 21:39:14,305] root - INFO - data shape: (405357, 5)
+[2023-05-21 21:39:14,305] root - INFO - found unwanted columns: ['InvoiceNo', 'StockCode', 'CustomerID']
+[2023-05-21 21:39:14,311] root - INFO - dropped unwanted columns: ['InvoiceNo', 'StockCode', 'CustomerID']
+[2023-05-21 21:39:14,311] root - INFO - data shape: (135098, 5)
+[2023-05-21 21:39:14,311] root - INFO - dropped unwanted cols in train and test
+[2023-05-21 21:39:14,311] root - INFO - ____________________dropping rows on condition(outliers), axis=1_________________________
+[2023-05-21 21:39:14,311] root - INFO - dropping some rows based on some conditions
+[2023-05-21 21:39:14,801] root - INFO - dropping rows on condition in base_df
+[2023-05-21 21:39:14,810] root - INFO - total values <1 and >40 in Quantity column is : (30194, 8)
+[2023-05-21 21:39:14,844] root - INFO - dropped Quantity <1 and >40
+[2023-05-21 21:39:14,853] root - INFO - total values <1 and >30 in Quantity column is : (104947, 8)
+[2023-05-21 21:39:14,898] root - INFO - dropped UnitPrice <1 and >30
+[2023-05-21 21:39:14,900] root - INFO - converted UnitPrice dtype into 'int' after dropping <1 and >30 values
+[2023-05-21 21:39:14,931] root - INFO -  Total 'Country' values_count less than 500 : 449
+[2023-05-21 21:39:14,931] root - INFO - Dropping country value_counts <500
+[2023-05-21 21:39:14,977] root - INFO - Dropped country value_counts <500
+[2023-05-21 21:39:14,977] root - INFO - strip Description
+[2023-05-21 21:39:15,106] root - INFO -  Total 'Description' values_count < 300 : 299
+[2023-05-21 21:39:15,106] root - INFO - Dropping Description value_counts <300
+[2023-05-21 21:39:15,158] root - INFO - after dropping some rows df shape : (403408, 8)
+[2023-05-21 21:39:15,165] root - INFO - data frame :   InvoiceNo StockCode                          Description  Quantity          InvoiceDate  UnitPrice  CustomerID         Country
+0    536365    85123A   WHITE HANGING HEART T-LIGHT HOLDER         6  2010-12-01 08:26:00          2       17850  United Kingdom
+1    536365     71053                  WHITE METAL LANTERN         6  2010-12-01 08:26:00          3       17850  United Kingdom
+2    536365    84406B       CREAM CUPID HEARTS COAT HANGER         8  2010-12-01 08:26:00          2       17850  United Kingdom
+3    536365    84029G  KNITTED UNION FLAG HOT WATER BOTTLE         6  2010-12-01 08:26:00          3       17850  United Kingdom
+4    536365    84029E       RED WOOLLY HOTTIE WHITE HEART.         6  2010-12-01 08:26:00          3       17850  United Kingdom
+[2023-05-21 21:39:15,167] root - INFO - dropped null values in base_df
+[2023-05-21 21:39:15,167] root - INFO - dropping rows on condition in train and test data
+[2023-05-21 21:39:15,648] root - INFO - total values <1 and >40 in Quantity column is : (22718, 8)
+[2023-05-21 21:39:15,684] root - INFO - dropped Quantity <1 and >40
+[2023-05-21 21:39:15,694] root - INFO - total values <1 and >30 in Quantity column is : (78564, 8)
+[2023-05-21 21:39:15,732] root - INFO - dropped UnitPrice <1 and >30
+[2023-05-21 21:39:15,734] root - INFO - converted UnitPrice dtype into 'int' after dropping <1 and >30 values
+[2023-05-21 21:39:15,764] root - INFO -  Total 'Country' values_count less than 500 : 486
+[2023-05-21 21:39:15,764] root - INFO - Dropping country value_counts <500
+[2023-05-21 21:39:15,822] root - INFO - Dropped country value_counts <500
+[2023-05-21 21:39:15,822] root - INFO - strip Description
+[2023-05-21 21:39:15,933] root - INFO -  Total 'Description' values_count < 300 : 299
+[2023-05-21 21:39:15,933] root - INFO - Dropping Description value_counts <300
+[2023-05-21 21:39:15,975] root - INFO - after dropping some rows df shape : (300891, 8)
+[2023-05-21 21:39:15,984] root - INFO - data frame :   InvoiceNo StockCode                     Description  Quantity          InvoiceDate  UnitPrice  CustomerID         Country
+0    551351     21164      HOME SWEET HOME METAL SIGN        12  2011-04-28 10:20:00          2       14298  United Kingdom
+2    575138     22686  FRENCH BLUE METAL DOOR SIGN No         2  2011-11-08 15:24:00          2       15287  United Kingdom
+3    575477     23521           WALL ART CAT AND BIRD         2  2011-11-09 16:14:00          5       15287  United Kingdom
+5    541695    84086C         PINK/PURPLE RETRO RADIO         2  2011-01-20 18:01:00          2       15287  United Kingdom
+6    541843     21448       12 DAISY PEGS IN WOOD BOX        24  2011-01-23 12:08:00          1       13659  United Kingdom
+[2023-05-21 21:39:16,175] root - INFO - total values <1 and >40 in Quantity column is : (7476, 8)
+[2023-05-21 21:39:16,190] root - INFO - dropped Quantity <1 and >40
+[2023-05-21 21:39:16,194] root - INFO - total values <1 and >30 in Quantity column is : (26383, 8)
+[2023-05-21 21:39:16,211] root - INFO - dropped UnitPrice <1 and >30
+[2023-05-21 21:39:16,213] root - INFO - converted UnitPrice dtype into 'int' after dropping <1 and >30 values
+[2023-05-21 21:39:16,224] root - INFO -  Total 'Country' values_count less than 500 : 455
+[2023-05-21 21:39:16,224] root - INFO - Dropping country value_counts <500
+[2023-05-21 21:39:16,240] root - INFO - Dropped country value_counts <500
+[2023-05-21 21:39:16,240] root - INFO - strip Description
+[2023-05-21 21:39:16,279] root - INFO -  Total 'Description' values_count < 300 : 292
+[2023-05-21 21:39:16,279] root - INFO - Dropping Description value_counts <300
+[2023-05-21 21:39:16,293] root - INFO - after dropping some rows df shape : (98357, 8)
+[2023-05-21 21:39:16,299] root - INFO - data frame :   InvoiceNo StockCode                          Description  Quantity          InvoiceDate  UnitPrice  CustomerID         Country
+0    546688     22789    T-LIGHT HOLDER SWEETHEART HANGING         8  2011-03-16 10:17:00          1       16497  United Kingdom
+1    547358    84558A         3D DOG PICTURE PLAYING CARDS         2  2011-03-22 12:25:00          2       15998  United Kingdom
+2    573426     22645  CERAMIC HEART FAIRY CAKE MONEY BANK         4  2011-10-31 10:17:00          4       15287  United Kingdom
+3    551339     22233          JIGSAW RABBIT AND BIRDHOUSE         1  2011-04-27 17:18:00          3       15287  United Kingdom
+4    536592     22791         T-LIGHT GLASS FLUTED ANTIQUE         4  2010-12-01 17:06:00          2       15287  United Kingdom
+[2023-05-21 21:39:16,301] root - INFO - dropped rows on condition in train and test df
+[2023-05-21 21:39:16,301] root - INFO - Writting reprt in yaml file
+[2023-05-21 21:39:16,303] root - INFO - report written into report.yaml
+[2023-05-21 21:39:16,303] root - INFO - data validation is almost done
+[2023-05-21 21:39:16,303] root - INFO - returning data_validation_artifact
