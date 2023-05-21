@@ -1,0 +1,21 @@
+dropping_missing_value_columns_in_base_df: []
+dropping_missing_value_columns_in_test_df: []
+dropping_missing_value_columns_in_train_df: []
+dropping_missing_value_rows_in_base_df:
+- 1454
+dropping_missing_value_rows_in_test_df:
+- 380
+dropping_missing_value_rows_in_train_df:
+- 1074
+dropping_unwanted_cols_in_base_df:
+- InvoiceNo
+- StockCode
+- CustomerID
+dropping_unwanted_cols_in_test_df:
+- InvoiceNo
+- StockCode
+- CustomerID
+dropping_unwanted_cols_in_train_df:
+- InvoiceNo
+- StockCode
+- CustomerID

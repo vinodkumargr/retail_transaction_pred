@@ -4,7 +4,7 @@ from Retail_transcation.logger import logging
 
 
 
-FILE_NAME = "final_data.csv"
+FILE_NAME = "Online_Retail.csv"
 TRAIN_FILE_NAME = "train.csv"
 TEST_FILE_NAME = "test.csv"
 
@@ -49,8 +49,10 @@ class DataValidationConfig:
     def __init__(self, training_pipeline_config: TrainingPipelineConfig):
         try:
             
-            self.data_validation_dir = os.path.join(training_pipeline_config.artifact_dir,"data_validation")
-            self.report_file_path = os.path.join(self.data_validation_dir,'report.yaml')
+            self.data_validation_dir = os.path.join(training_pipeline_config.artifact_dir, "data_validation")
+            os.makedirs(self.data_validation_dir, exist_ok=True)  # Create the data_validation directory if it doesn't exist
+            self.report_file_path = os.path.join(self.data_validation_dir, "report.yaml")
+
             self.base_file_path = os.path.join(FILE_NAME)
             
         except Exception as e:

@@ -1,0 +1,122 @@
+[2023-05-21 16:30:07,621] root - INFO - printing dict data : {'database_name': 'online_retail', 'collection_name': 'online_retail', 'data_ingestion_dir': '/home/vinod/projects/retail_transaction_pred/artifacts/data_ingestion', 'feature_store_path': '/home/vinod/projects/retail_transaction_pred/artifacts/data_ingestion/feature_store/Online_Retail.csv', 'train_file_path': '/home/vinod/projects/retail_transaction_pred/artifacts/data_ingestion/data_split/train.csv', 'test_file_path': '/home/vinod/projects/retail_transaction_pred/artifacts/data_ingestion/data_split/test.csv'}
+[2023-05-21 16:30:07,622] root - INFO - Starting data ingestion
+[2023-05-21 16:30:07,622] root - INFO - Reading data from mongoDB
+[2023-05-21 16:30:50,298] root - INFO - Found data shape : (541909, 9)
+[2023-05-21 16:30:50,442] root - INFO - Found _id and dropped
+[2023-05-21 16:30:50,442] root - INFO - data shape : (541909, 8)
+[2023-05-21 16:30:50,442] root - INFO - got data from mongodb
+[2023-05-21 16:30:50,442] root - INFO - preparing for replace na with NAN
+[2023-05-21 16:30:50,736] root - INFO - creating feature store dir
+[2023-05-21 16:30:50,737] root - INFO - storing into feature store dir
+[2023-05-21 16:30:52,038] root - INFO - spliting data into train and test
+[2023-05-21 16:30:52,201] root - INFO - create dataset_dir if not exist
+[2023-05-21 16:30:52,202] root - INFO - save dataset to feature store after split
+[2023-05-21 16:30:54,042] root - INFO - data validation started :
+[2023-05-21 16:30:54,042] root - INFO - ____________________dropping null values, axis=1_________________________
+[2023-05-21 16:30:54,640] root - INFO - replaced na with np.NAN
+[2023-05-21 16:30:54,640] root - INFO - dropping null values in base_df, axis=1
+[2023-05-21 16:30:54,723] root - INFO - now shape of df : (541909, 8)
+[2023-05-21 16:30:54,723] root - INFO - columns : Index(['InvoiceNo', 'StockCode', 'Description', 'Quantity', 'InvoiceDate',
+       'UnitPrice', 'CustomerID', 'Country'],
+      dtype='object')
+[2023-05-21 16:30:54,723] root - INFO - dropped null values in base_df
+[2023-05-21 16:30:54,724] root - INFO - dropping null values in train and test data,axis-1
+[2023-05-21 16:30:55,128] root - INFO - now shape of df : (406431, 8)
+[2023-05-21 16:30:55,128] root - INFO - columns : Index(['InvoiceNo', 'StockCode', 'Description', 'Quantity', 'InvoiceDate',
+       'UnitPrice', 'CustomerID', 'Country'],
+      dtype='object')
+[2023-05-21 16:30:55,266] root - INFO - now shape of df : (135478, 8)
+[2023-05-21 16:30:55,266] root - INFO - columns : Index(['InvoiceNo', 'StockCode', 'Description', 'Quantity', 'InvoiceDate',
+       'UnitPrice', 'CustomerID', 'Country'],
+      dtype='object')
+[2023-05-21 16:30:55,266] root - INFO - dropped null val ues in train and test df
+[2023-05-21 16:30:55,266] root - INFO - ____________________dropping null values, axis=0_________________________
+[2023-05-21 16:30:55,266] root - INFO - dropping null values in base_df, axsi-0
+[2023-05-21 16:30:55,387] root - INFO - now shape of df : (540455, 8)
+[2023-05-21 16:30:55,387] root - INFO - columns : Index(['InvoiceNo', 'StockCode', 'Description', 'Quantity', 'InvoiceDate',
+       'UnitPrice', 'CustomerID', 'Country'],
+      dtype='object')
+[2023-05-21 16:30:55,387] root - INFO - dropping null values in train and test df, axis-0
+[2023-05-21 16:30:55,483] root - INFO - now shape of df : (405357, 8)
+[2023-05-21 16:30:55,483] root - INFO - columns : Index(['InvoiceNo', 'StockCode', 'Description', 'Quantity', 'InvoiceDate',
+       'UnitPrice', 'CustomerID', 'Country'],
+      dtype='object')
+[2023-05-21 16:30:55,516] root - INFO - now shape of df : (135098, 8)
+[2023-05-21 16:30:55,516] root - INFO - columns : Index(['InvoiceNo', 'StockCode', 'Description', 'Quantity', 'InvoiceDate',
+       'UnitPrice', 'CustomerID', 'Country'],
+      dtype='object')
+[2023-05-21 16:30:55,516] root - INFO - dropped null values, axis=0
+[2023-05-21 16:30:55,516] root - INFO - ____________________dropping unwanted cols, axis=1_________________________
+[2023-05-21 16:30:55,516] root - INFO - dropping null values in base_df, axsi-0
+[2023-05-21 16:30:55,516] root - INFO - found unwanted columns ['InvoiceNo', 'StockCode', 'CustomerID']
+[2023-05-21 16:30:55,531] root - INFO - dropped unwanted coluumns : ['InvoiceNo', 'StockCode', 'CustomerID']
+[2023-05-21 16:30:55,531] root - INFO - data shape : (540455, 5)
+[2023-05-21 16:30:55,531] root - INFO - dropping null values in train and test df, axis-0
+[2023-05-21 16:30:55,531] root - INFO - found unwanted columns ['InvoiceNo', 'StockCode', 'CustomerID']
+[2023-05-21 16:30:55,545] root - INFO - dropped unwanted coluumns : ['InvoiceNo', 'StockCode', 'CustomerID']
+[2023-05-21 16:30:55,545] root - INFO - data shape : (405357, 5)
+[2023-05-21 16:30:55,545] root - INFO - found unwanted columns ['InvoiceNo', 'StockCode', 'CustomerID']
+[2023-05-21 16:30:55,550] root - INFO - dropped unwanted coluumns : ['InvoiceNo', 'StockCode', 'CustomerID']
+[2023-05-21 16:30:55,550] root - INFO - data shape : (135098, 5)
+[2023-05-21 16:30:55,550] root - INFO - dropped unwanted cols
+[2023-05-21 16:30:55,550] root - INFO - ____________________dropping rows on condition(outliers), axis=1_________________________
+[2023-05-21 16:30:55,550] root - INFO - dropping some rows based on some conditions
+[2023-05-21 16:30:55,981] root - INFO - dropping rows on condition in base_df
+[2023-05-21 16:30:55,981] root - INFO - checking quantity <1 and >40
+[2023-05-21 16:30:56,012] root - INFO - total values <1 and >40 in Quantity column is : (30194, 8)
+[2023-05-21 16:30:56,012] root - INFO - dropping Quantity <1 and >40
+[2023-05-21 16:30:56,040] root - INFO - dropped Quantity <1 and >40
+[2023-05-21 16:30:56,040] root - INFO - checking UnitPrice <1 and >30
+[2023-05-21 16:30:56,048] root - INFO - total values <1 and >30 in Quantity column is : (104947, 8)
+[2023-05-21 16:30:56,048] root - INFO - dropping UnitPrice <1 and >30
+[2023-05-21 16:30:56,083] root - INFO - dropped UnitPrice <1 and >30
+[2023-05-21 16:30:56,085] root - INFO - converted UnitPrice dtype into 'int' after dropping <1 and >30 values
+[2023-05-21 16:30:56,114] root - INFO -  Total 'Country' values_count less than 500 : 449
+[2023-05-21 16:30:56,114] root - INFO - Dropping country value_counts <500
+[2023-05-21 16:30:56,162] root - INFO - Dropped country value_counts <500
+[2023-05-21 16:30:56,162] root - INFO - strip Description
+[2023-05-21 16:30:56,257] root - INFO -  Total 'Description' values_count < 300 : 299
+[2023-05-21 16:30:56,258] root - INFO - Dropping Description value_counts <300
+[2023-05-21 16:30:56,302] root - INFO - Dropped Description value_counts < 300
+[2023-05-21 16:30:56,302] root - INFO - after dropping some rows df shape : (403408, 8)
+[2023-05-21 16:30:56,305] root - INFO - dropped null values in base_df
+[2023-05-21 16:30:56,305] root - INFO - dropping rows on condition in train and test data
+[2023-05-21 16:30:56,667] root - INFO - checking quantity <1 and >40
+[2023-05-21 16:30:56,673] root - INFO - total values <1 and >40 in Quantity column is : (22718, 8)
+[2023-05-21 16:30:56,673] root - INFO - dropping Quantity <1 and >40
+[2023-05-21 16:30:56,700] root - INFO - dropped Quantity <1 and >40
+[2023-05-21 16:30:56,700] root - INFO - checking UnitPrice <1 and >30
+[2023-05-21 16:30:56,708] root - INFO - total values <1 and >30 in Quantity column is : (78564, 8)
+[2023-05-21 16:30:56,708] root - INFO - dropping UnitPrice <1 and >30
+[2023-05-21 16:30:56,737] root - INFO - dropped UnitPrice <1 and >30
+[2023-05-21 16:30:56,738] root - INFO - converted UnitPrice dtype into 'int' after dropping <1 and >30 values
+[2023-05-21 16:30:56,760] root - INFO -  Total 'Country' values_count less than 500 : 486
+[2023-05-21 16:30:56,760] root - INFO - Dropping country value_counts <500
+[2023-05-21 16:30:56,793] root - INFO - Dropped country value_counts <500
+[2023-05-21 16:30:56,793] root - INFO - strip Description
+[2023-05-21 16:30:56,869] root - INFO -  Total 'Description' values_count < 300 : 299
+[2023-05-21 16:30:56,869] root - INFO - Dropping Description value_counts <300
+[2023-05-21 16:30:56,898] root - INFO - Dropped Description value_counts < 300
+[2023-05-21 16:30:56,898] root - INFO - after dropping some rows df shape : (300891, 8)
+[2023-05-21 16:30:57,028] root - INFO - checking quantity <1 and >40
+[2023-05-21 16:30:57,030] root - INFO - total values <1 and >40 in Quantity column is : (7476, 8)
+[2023-05-21 16:30:57,031] root - INFO - dropping Quantity <1 and >40
+[2023-05-21 16:30:57,040] root - INFO - dropped Quantity <1 and >40
+[2023-05-21 16:30:57,040] root - INFO - checking UnitPrice <1 and >30
+[2023-05-21 16:30:57,044] root - INFO - total values <1 and >30 in Quantity column is : (26383, 8)
+[2023-05-21 16:30:57,044] root - INFO - dropping UnitPrice <1 and >30
+[2023-05-21 16:30:57,054] root - INFO - dropped UnitPrice <1 and >30
+[2023-05-21 16:30:57,054] root - INFO - converted UnitPrice dtype into 'int' after dropping <1 and >30 values
+[2023-05-21 16:30:57,062] root - INFO -  Total 'Country' values_count less than 500 : 455
+[2023-05-21 16:30:57,062] root - INFO - Dropping country value_counts <500
+[2023-05-21 16:30:57,074] root - INFO - Dropped country value_counts <500
+[2023-05-21 16:30:57,074] root - INFO - strip Description
+[2023-05-21 16:30:57,100] root - INFO -  Total 'Description' values_count < 300 : 292
+[2023-05-21 16:30:57,100] root - INFO - Dropping Description value_counts <300
+[2023-05-21 16:30:57,112] root - INFO - Dropped Description value_counts < 300
+[2023-05-21 16:30:57,112] root - INFO - after dropping some rows df shape : (98357, 8)
+[2023-05-21 16:30:57,113] root - INFO - dropped rows on condition in train and test df
+[2023-05-21 16:30:57,113] root - INFO - Writting reprt in yaml file
+[2023-05-21 16:30:57,114] root - INFO - report written into report.yaml
+[2023-05-21 16:30:57,114] root - INFO - data validation is almost done
+[2023-05-21 16:30:57,114] root - INFO - returning data_validation_artifact

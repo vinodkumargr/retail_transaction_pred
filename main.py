@@ -2,7 +2,7 @@ from Retail_transcation.exception import RetailException
 from Retail_transcation.logger import logging
 from Retail_transcation.components.data_ingestion import DataIngestion
 from Retail_transcation import utils
-from Retail_transcation.components.data_ingestion import DataIngestion
+from Retail_transcation.components.data_validation import DataValidation
 from Retail_transcation.entity import config_entity, artifacts_entity
 import os, sys
 
@@ -21,6 +21,15 @@ if __name__=="__main__":
 
         data_ingestion = DataIngestion(data_ingestion_config=data_ingestion_config)
         data_ingestion_artifact=data_ingestion.start_data_ingestion()
+
+
+        # data validation:
+
+        data_validation_config = config_entity.DataValidationConfig(training_pipeline_config=training_pipeline_config)
+        data_validation= DataValidation(data_validation_config=data_validation_config,
+                                        data_ingestion_artifacts=data_ingestion_artifact)
+        data_validation_artifact=data_validation.initiate_data_validation()
+
 
     except Exception as e:
         print(e)
