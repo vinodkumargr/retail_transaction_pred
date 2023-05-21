@@ -82,24 +82,20 @@ class DataValidation:
         try:
 
             # drop rows for quantity less than 1 and greater than 40
-            logging.info("checking quantity <1 and >40")
             drop_quantity = df[(df['Quantity'] < 1) | (df['Quantity'] > 40)]
             drop_quantity_shape = drop_quantity.shape
 
             logging.info(f"total values <1 and >40 in Quantity column is : {drop_quantity_shape}")
-            logging.info("dropping Quantity <1 and >40")
             df.drop(drop_quantity.index, axis=0, inplace=True)
 
             logging.info("dropped Quantity <1 and >40")
 
 
             # drop rows for UnitPrice less than 1 and greater than 30
-            logging.info("checking UnitPrice <1 and >30")
             drop_UnitPrice = df[(df['UnitPrice'] < 1) | (df['UnitPrice'] > 30)]
             drop_UnitPrice_shape = drop_UnitPrice.shape
             
             logging.info(f"total values <1 and >30 in Quantity column is : {drop_UnitPrice_shape}")
-            logging.info("dropping UnitPrice <1 and >30")
             df.drop(drop_UnitPrice.index, axis=0, inplace=True)
             logging.info("dropped UnitPrice <1 and >30")
 
@@ -129,38 +125,15 @@ class DataValidation:
             logging.info("Dropping Description value_counts <300")
             df.drop(df[df['Description'].isin(drop_Description_index)].index, axis=0, inplace=True)
 
-            logging.info("Dropped Description value_counts < 300")
-
             logging.info(f"after dropping some rows df shape : {df.shape}")
+
+            logging.info(f"data frame : {df.head(5)}")
 
             return df
 
         except Exception as e:
             raise RetailException(e,sys)
 
-
-
-    def handle_InvoiceDate(self, df:pd.DataFrame):
-        try:
-            logging.info("checking InvoiceDate :")
-            if df['InvoiceDate'].dtype !='datetime':
-                logging.info('df[InvoiceDate] dtype != datetime, converting into datetime')
-                df['InvoiceDate'] = pd.to_datetime(df['InvoiceDate'])
-            else:
-                return df
-            
-            logging.info('creating columns Day, Month and Year from InvoiceDate')
-
-            df['Day']=df['InvoiceDate'].dt.day
-            df['Month']=df['InvoiceDate'].dt.month
-            df['Year']=df['InvoiceDate'].dt.year - 2000
-
-            df.drop(['InvoiceDate'],axis=1,inplace=True)
-
-            logging.info("Created new columns Day, Month and year and dropped column InvoiceDate")
-
-        except Exception as e:
-            raise RetailException(e,sys)
         
 
     def initiate_data_validation(self)->artifacts_entity.DataValidationArtifact:
@@ -201,7 +174,7 @@ class DataValidation:
             logging.info("dropping null values in train and test df, axis-0")
             train_df = self.drop_unwanted_columns(df=train_df,report_key_names="dropping_unwanted_cols_in_train_df")
             test_df = self.drop_unwanted_columns(df=test_df,report_key_names="dropping_unwanted_cols_in_test_df")
-            logging.info("dropped unwanted cols")
+            logging.info("dropped unwanted cols in train and test")
 
 
             logging.info("____________________dropping rows on condition(outliers), axis=1_________________________")
@@ -232,6 +205,7 @@ class DataValidation:
                 report_file_path=self.data_validation_config.report_file_path)
             logging.info("returning data_validation_artifact")
 
+            
 
             return data_validation_artifact
 

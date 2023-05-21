@@ -58,6 +58,15 @@ class DataValidationConfig:
         except Exception as e:
             raise RetailException(e,sys)
 
+class DataTransformationConfig:
+
+    def __init__(self, training_pipeline_config: TrainingPipelineConfig):
+        try:
+            
+            self.data_transformation_dir = os.path.join(training_pipeline_config.artifact_dir,"data_transformation")
+            self.transformation_train_path = os.path.join(self.data_transformation_dir,"data_split", "transform_train.csv")
+            self.transformation_test_path = os.path.join(self.data_transformation_dir,"data_split", "transform_test.csv")
 
 
-
+        except Exception as e:
+            raise RetailException(e,sys)
