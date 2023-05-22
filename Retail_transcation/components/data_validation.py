@@ -32,6 +32,9 @@ class DataValidation:
 
             df = df.drop(list(drop_column_names), axis=1)
             
+            
+            logging.info(f"now shape of df : {df.shape}")
+    
             logging.info(f"now shape of df : {df.shape}")
             logging.info(f"columns : {df.columns}")
 
@@ -49,6 +52,7 @@ class DataValidation:
             self.data_validation_errors[report_key_names] = list(drop_null_value_column_rows.shape)
 
             df = df.drop(list(drop_null_value_column_rows), axis=0)
+            df = df.dropna(axis=0)
             
             logging.info(f"now shape of df : {df.shape}")
             logging.info(f"columns : {df.columns}")
@@ -109,7 +113,7 @@ class DataValidation:
 
             # drop rows for Country <500
             drop_country = df['Country'].value_counts()[df['Country'].value_counts() <500]
-            logging.info(f" Total 'Country' values_count less than 500 : {drop_country[0]}")
+            logging.info(f" Total 'Country' values_count less than 500 : {drop_country.shape}")
             drop_country_index=drop_country.index
 
             logging.info("Dropping country value_counts <500")
@@ -146,51 +150,53 @@ class DataValidation:
 
             logging.info("____________________dropping null values, axis=1_________________________")
             base_df = pd.read_csv(self.data_validation_config.base_file_path)
-            base_df.replace({"na", np.NAN}, inplace=True)
-            logging.info("replaced na with np.NAN")
+            train_df = pd.read_csv(self.data_ingestion_artifacts.train_file_path)
+            test_df = pd.read_csv(self.data_ingestion_artifacts.test_file_path)
+
+            #base_df.replace({"na", np.NAN}, inplace=True)
+            #logging.info("replaced na with np.NAN")
 
             logging.info("dropping null values in base_df, axis=1")
             base_df=self.drop_null_value_columns(df=base_df, report_key_names="dropping_missing_value_columns_in_base_df")
-            logging.info("dropped null values in base_df")
+            logging.info(f"dropped null values in base_df and df shape is : {base_df.shape}")
 
             logging.info("dropping null values in train and test data,axis-1")
-            train_df = pd.read_csv(self.data_ingestion_artifacts.train_file_path)
             train_df=self.drop_null_value_columns(df=train_df, report_key_names="dropping_missing_value_columns_in_train_df")
-            test_df = pd.read_csv(self.data_ingestion_artifacts.test_file_path)
+
             test_df=self.drop_null_value_columns(df=test_df, report_key_names="dropping_missing_value_columns_in_test_df")
-            logging.info("dropped null val ues in train and test df")
+            logging.info(f"dropped null val ues in train and test df: train_df .shape = {train_df.shape} , test_df.shape = {test_df.shape}")
 
 
             logging.info("____________________dropping null values, axis=0_________________________")
-            logging.info("dropping null values in base_df, axsi-0")
+            logging.info(f"dropping null values in base_df, axsi-0 and df shape is : {base_df.shape}")
             base_df = self.drop_null_value_rows(df=base_df,report_key_names="dropping_missing_value_rows_in_base_df")
 
             logging.info("dropping null values in train and test df, axis-0")
             train_df = self.drop_null_value_rows(df=train_df,report_key_names="dropping_missing_value_rows_in_train_df")
             test_df = self.drop_null_value_rows(df=test_df,report_key_names="dropping_missing_value_rows_in_test_df")
-            logging.info("dropped null values, axis=0")
+            logging.info(f"dropped null values, axis=0 train_df .shape = {train_df.shape} , test_df.shape = {test_df.shape}")
 
 
             logging.info("____________________dropping unwanted cols, axis=1_________________________")
-            logging.info("dropping null values in base_df, axsi-0")
+            logging.info(f"dropping null values in base_df, axsi-0 and df shape is : {base_df.shape}")
             base_df = self.drop_unwanted_columns(df=base_df,report_key_names="dropping_unwanted_cols_in_base_df")
 
             logging.info("dropping null values in train and test df, axis-0")
             train_df = self.drop_unwanted_columns(df=train_df,report_key_names="dropping_unwanted_cols_in_train_df")
             test_df = self.drop_unwanted_columns(df=test_df,report_key_names="dropping_unwanted_cols_in_test_df")
-            logging.info("dropped unwanted cols in train and test")
+            logging.info(f"dropped unwanted cols in train and test train_df .shape = {train_df.shape} , test_df.shape = {test_df.shape}")
 
 
             logging.info("____________________dropping rows on condition(outliers), axis=1_________________________")
 
-            logging.info("dropping rows on condition in base_df")
+            logging.info(f"dropping rows on condition in base_df and df shape is : {base_df.shape}")
             base_df=self.drop_rows_on_condition(df=base_df)
             logging.info("dropped null values in base_df")
 
             logging.info("dropping rows on condition in train and test data")
             train_df=self.drop_rows_on_condition(df=train_df)
             test_df=self.drop_rows_on_condition(df=test_df)
-            logging.info("dropped rows on condition in train and test df")
+            logging.info(f"dropped rows on condition in train and test df train_df .shape = {train_df.shape} , test_df.shape = {test_df.shape}")
 
 
             logging.info("Writting reprt in yaml file")
@@ -198,11 +204,22 @@ class DataValidation:
             data=self.data_validation_errors)
             logging.info("report written into report.yaml")
 
+            logging.info("storing validation base_df into data validation artifacts")
+            base_df.to_csv(path_or_buf=self.data_validation_config.valid_feature_store_path, index=False, header=True)
+
+            logging.info("storing validation train data into data validation artifacts")
+            train_df.to_csv(path_or_buf=self.data_validation_config.valid_train_file_path, index=False, header=True)
+
+            logging.info("storing validation test data into data validation artifacts")
+            test_df.to_csv(path_or_buf=self.data_validation_config.valid_test_file_path, index=False, header=True)
 
             logging.info("data validation is almost done")
 
             data_validation_artifact = artifacts_entity.DataValidationArtifact(
-                report_file_path=self.data_validation_config.report_file_path)
+                report_file_path=self.data_validation_config.report_file_path,
+                valid_feature_store_path=self.data_validation_config.valid_feature_store_path,
+                valid_train_file_path=self.data_validation_config.valid_train_file_path,
+                valid_test_file_path=self.data_validation_config.valid_test_file_path)
             logging.info("returning data_validation_artifact")
 
             

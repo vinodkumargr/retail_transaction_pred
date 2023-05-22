@@ -21,10 +21,12 @@ class DataIngestion:
         try:
 
             logging.info("Starting data ingestion")
+
+
             df=pd.DataFrame = utils.get_as_df(database_name=self.data_ingestion_config.database_name,
                                             collection_name=self.data_ingestion_config.collection_name)
-            database_name=self.data_ingestion_config.database_name
-            collection_name=self.data_ingestion_config.collection_name
+            #database_name=self.data_ingestion_config.database_name
+            #collection_name=self.data_ingestion_config.collection_name
             logging.info("got data from mongodb")
 
             logging.info("creating feature store dir")
