@@ -22,36 +22,17 @@ class DataValidation:
 
         except Exception as e:
             raise RetailException(e,sys)
-        
-    def drop_null_value_columns(self, df:pd.DataFrame, report_key_names:str)->Optional[pd.DataFrame]:
-        try:
-            
-            null_report = df.isna().sum()/df.shape[1]
-            drop_column_names = null_report[null_report > 200].index
-            self.data_validation_errors[report_key_names] = list(drop_column_names)
 
-            df = df.drop(list(drop_column_names), axis=1)
-            
-            
-            logging.info(f"now shape of df : {df.shape}")
-    
-            logging.info(f"now shape of df : {df.shape}")
-            logging.info(f"columns : {df.columns}")
 
-            return df
-
-        except Exception as e:
-            raise RetailException(e,sys)
-        
 
     def drop_null_value_rows(self, df:pd.DataFrame, report_key_names:str)->Optional[pd.DataFrame]:
         try:
             
-            null_report = df.isna().sum(axis=1)/df.shape[0]
+            null_report = df.isnull().sum(axis=1)/df.shape[0]
             drop_null_value_column_rows = null_report[null_report > 0.00].index
             self.data_validation_errors[report_key_names] = list(drop_null_value_column_rows.shape)
 
-            df = df.drop(list(drop_null_value_column_rows), axis=0)
+            #df = df.drop(list(drop_null_value_column_rows), axis=0)
             df = df.dropna(axis=0)
             
             logging.info(f"now shape of df : {df.shape}")
@@ -148,23 +129,12 @@ class DataValidation:
         try:
             logging.info("data validation started :")
 
-            logging.info("____________________dropping null values, axis=1_________________________")
             base_df = pd.read_csv(self.data_validation_config.base_file_path)
             train_df = pd.read_csv(self.data_ingestion_artifacts.train_file_path)
             test_df = pd.read_csv(self.data_ingestion_artifacts.test_file_path)
 
             #base_df.replace({"na", np.NAN}, inplace=True)
             #logging.info("replaced na with np.NAN")
-
-            logging.info("dropping null values in base_df, axis=1")
-            base_df=self.drop_null_value_columns(df=base_df, report_key_names="dropping_missing_value_columns_in_base_df")
-            logging.info(f"dropped null values in base_df and df shape is : {base_df.shape}")
-
-            logging.info("dropping null values in train and test data,axis-1")
-            train_df=self.drop_null_value_columns(df=train_df, report_key_names="dropping_missing_value_columns_in_train_df")
-
-            test_df=self.drop_null_value_columns(df=test_df, report_key_names="dropping_missing_value_columns_in_test_df")
-            logging.info(f"dropped null val ues in train and test df: train_df .shape = {train_df.shape} , test_df.shape = {test_df.shape}")
 
 
             logging.info("____________________dropping null values, axis=0_________________________")

@@ -9,6 +9,8 @@ import pandas as pd
 import numpy as np
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.feature_extraction import FeatureHasher
+from sklearn.impute import SimpleImputer
+import random
 
 
 
@@ -51,25 +53,47 @@ class DataTransformation:
             raise RetailException(e,sys)
         
 
-    def encode_object_columns(self, df:pd.DataFrame):
+    def impute_missing_values(self, df:pd.DataFrame):
         try:
+            imputer = SimpleImputer(strategy="most_frequent")  
+            df_imputed = df.copy()
 
-            logging.info("encoding object columns ")
+            for column in df.columns:
+                if df[column].isnull().sum() > 0:
+                    column_values = df[column].values.reshape(-1, 1)
+                    imputed_values = imputer.fit_transform(column_values)
+                    df_imputed[column] = imputed_values
 
-            encoder = OneHotEncoder(dtype=int)
+            return df_imputed
+        
+        except Exception as e:
+            raise RetailException(e, sys)
 
-            # Apply one-hot encoding on 'Description' and 'country' columns
-            Description = encoder.fit_transform(df[['Description']])
-            Country = encoder.fit_transform(df[['Country']])
+    def encode_object_columns(self, df: pd.DataFrame):
+        try:
+            max_features_description = 380  # Maximum number of hashed features for Description column
+            max_features_country = 14  # Number of columns to keep for Country column
+            columns = ['Description', 'Country']
 
-            Description = pd.DataFrame(Description)
-            Country = pd.DataFrame(Country)
+            hasher_description = FeatureHasher(n_features=max_features_description, input_type='string')
+            hasher_country = FeatureHasher(n_features=max_features_country, input_type='string')
 
-            f_df = pd.concat([Description, Country], axis=1)
+            hashed_dfs = []
 
-            df = pd.concat([df,f_df], axis=1)
+            for column in columns:
+                if column == 'Description':
+                    column_values = df[column].astype(str).values
+                    random.shuffle(column_values)  # Randomly shuffle the values
+                    hashed_features = hasher_description.transform(column_values[:max_features_description])
+                elif column == 'Country':
+                    hashed_features = hasher_country.transform(df[column].astype(str))
 
-            df = df.drop(columns=['Description','Country'], axis=1)
+                hashed_df = pd.DataFrame(hashed_features.toarray())
+                hashed_df.columns = [f'{column}_{i}' for i in range(hashed_df.shape[1])]
+                hashed_dfs.append(hashed_df)
+
+            # Concatenate the hashed features DataFrames with the original DataFrame
+            df = pd.concat(hashed_dfs, axis=1)
 
             return df
 
@@ -140,6 +164,16 @@ class DataTransformation:
             logging.info (f"......................................................................test_df shape ..................................{test_df.shape}")
 
             logging.info(f"columns = {base_df.head(5)}")
+
+
+            # simple imputer
+            logging.info(".........simple imputer in base_df...........")
+            base_df=self.impute_missing_values(df=base_df)
+
+            logging.info("handling simple imputer in train and test data")
+            train_df=self.impute_missing_values(df=train_df)
+            test_df=self.impute_missing_values(df=test_df)
+            logging.info("handled simple imputer.......")
 
 
             # encode onject columns:
