@@ -33,7 +33,7 @@ class DataTransformation:
                 logging.info('df[InvoiceDate] dtype != datetime, converting into datetime')
                 df['InvoiceDate'] = pd.to_datetime(df['InvoiceDate'])
             else:
-                return df
+                pass
             
             logging.info('creating columns Day, Month and Year(from 2000) from InvoiceDate')
 
@@ -41,7 +41,7 @@ class DataTransformation:
             df['Month']=df['InvoiceDate'].dt.month
             df['Year']=df['InvoiceDate'].dt.year - 2000
 
-            df.drop(['InvoiceDate'],axis=1,inplace=True)
+            df = df.drop(['InvoiceDate'],axis=1)
 
             logging.info("Created new columns Day, Month and year and dropped column InvoiceDate")
 
@@ -59,11 +59,15 @@ class DataTransformation:
             encoder = OneHotEncoder(dtype=int)
 
             # Apply one-hot encoding on 'Description' and 'country' columns
+            Description = encoder.fit_transform(df[['Description']])
+            Country = encoder.fit_transform(df[['Country']])
 
-            Description = encoder.fit_transform(df['Description'].values.reshape(-1,1))
-            Country = encoder.fit_transform(df['Country'].values.reshape(-1,1))
+            Description = pd.DataFrame(Description)
+            Country = pd.DataFrame(Country)
 
-            df = pd.concat(df, pd.concat(Description, Country, axis=1), axis=1)
+            f_df = pd.concat([Description, Country], axis=1)
+
+            df = pd.concat([df,f_df], axis=1)
 
             df = df.drop(columns=['Description','Country'], axis=1)
 
@@ -73,8 +77,6 @@ class DataTransformation:
             raise RetailException(e, sys)
 
 
-        except Exception as e:
-            raise RetailException(e, sys)
         
     def convert_dtypes_into_int(self, df:pd.DataFrame):
         try:
@@ -133,10 +135,15 @@ class DataTransformation:
             logging.info("handled InvoiceDate.......")
 
 
+            logging.info (f"......................................................................base_df shape ..................................{base_df.shape}")
+            logging.info (f"......................................................................train_df shape ..................................{train_df.shape}")
+            logging.info (f"......................................................................test_df shape ..................................{test_df.shape}")
+
+            logging.info(f"columns = {base_df.head(5)}")
+
+
             # encode onject columns:
 
-    
-            
             logging.info(".........encoding objects column in base_df...........")
             base_df=self.encode_object_columns(df=base_df)
 
