@@ -1,0 +1,183 @@
+[2023-05-23 15:51:51,795] root - INFO - printing dict data : {'database_name': 'online_retail', 'collection_name': 'online_retail', 'data_ingestion_dir': '/home/vinod/projects/retail_transaction_pred/artifacts/data_ingestion', 'feature_store_path': '/home/vinod/projects/retail_transaction_pred/Online Retail.csv', 'train_file_path': '/home/vinod/projects/retail_transaction_pred/artifacts/data_ingestion/data_split/train.csv', 'test_file_path': '/home/vinod/projects/retail_transaction_pred/artifacts/data_ingestion/data_split/test.csv'}
+[2023-05-23 15:51:51,795] root - INFO - Starting data ingestion
+[2023-05-23 15:51:51,795] root - INFO - Reading data from mongoDB
+[2023-05-23 16:13:51,729] root - INFO - Found data shape : (541909, 9)
+[2023-05-23 16:13:51,827] root - INFO - Found _id and dropped
+[2023-05-23 16:13:51,827] root - INFO - data shape : (541909, 8)
+[2023-05-23 16:13:51,827] root - INFO - got data from mongodb
+[2023-05-23 16:13:51,827] root - INFO - creating feature store dir
+[2023-05-23 16:13:51,827] root - INFO - storing into feature store dir
+[2023-05-23 16:13:53,471] root - INFO - spliting data into train and test
+[2023-05-23 16:13:53,647] root - INFO - create dataset_dir if not exist
+[2023-05-23 16:13:53,647] root - INFO - save dataset to feature store after split
+[2023-05-23 16:13:56,089] root - INFO - data validation started :
+[2023-05-23 16:13:56,987] root - INFO - ____________________dropping null values, axis=0_________________________
+[2023-05-23 16:13:56,987] root - INFO - dropping null values in base_df, axsi-0 and df shape is : (541909, 8)
+[2023-05-23 16:13:57,166] root - INFO - now shape of df : (540455, 8)
+[2023-05-23 16:13:57,167] root - INFO - columns : Index(['InvoiceNo', 'StockCode', 'Description', 'Quantity', 'InvoiceDate',
+       'UnitPrice', 'CustomerID', 'Country'],
+      dtype='object')
+[2023-05-23 16:13:57,171] root - INFO - dropping null values in train and test df, axis-0
+[2023-05-23 16:13:57,312] root - INFO - now shape of df : (405357, 8)
+[2023-05-23 16:13:57,312] root - INFO - columns : Index(['InvoiceNo', 'StockCode', 'Description', 'Quantity', 'InvoiceDate',
+       'UnitPrice', 'CustomerID', 'Country'],
+      dtype='object')
+[2023-05-23 16:13:57,367] root - INFO - now shape of df : (135098, 8)
+[2023-05-23 16:13:57,367] root - INFO - columns : Index(['InvoiceNo', 'StockCode', 'Description', 'Quantity', 'InvoiceDate',
+       'UnitPrice', 'CustomerID', 'Country'],
+      dtype='object')
+[2023-05-23 16:13:57,369] root - INFO - dropped null values, axis=0 train_df .shape = (405357, 8) , test_df.shape = (135098, 8)
+[2023-05-23 16:13:57,369] root - INFO - ____________________dropping unwanted cols, axis=1_________________________
+[2023-05-23 16:13:57,369] root - INFO - dropping null values in base_df, axsi-0 and df shape is : (540455, 8)
+[2023-05-23 16:13:57,369] root - INFO - found unwanted columns: ['InvoiceNo', 'StockCode', 'CustomerID']
+[2023-05-23 16:13:57,380] root - INFO - dropped unwanted columns: ['InvoiceNo', 'StockCode', 'CustomerID']
+[2023-05-23 16:13:57,380] root - INFO - data shape: (540455, 5)
+[2023-05-23 16:13:57,385] root - INFO - dropping null values in train and test df, axis-0
+[2023-05-23 16:13:57,385] root - INFO - found unwanted columns: ['InvoiceNo', 'StockCode', 'CustomerID']
+[2023-05-23 16:13:57,396] root - INFO - dropped unwanted columns: ['InvoiceNo', 'StockCode', 'CustomerID']
+[2023-05-23 16:13:57,396] root - INFO - data shape: (405357, 5)
+[2023-05-23 16:13:57,402] root - INFO - found unwanted columns: ['InvoiceNo', 'StockCode', 'CustomerID']
+[2023-05-23 16:13:57,407] root - INFO - dropped unwanted columns: ['InvoiceNo', 'StockCode', 'CustomerID']
+[2023-05-23 16:13:57,408] root - INFO - data shape: (135098, 5)
+[2023-05-23 16:13:57,410] root - INFO - dropped unwanted cols in train and test train_df .shape = (405357, 5) , test_df.shape = (135098, 5)
+[2023-05-23 16:13:57,410] root - INFO - ____________________dropping rows on condition(outliers), axis=1_________________________
+[2023-05-23 16:13:57,410] root - INFO - dropping rows on condition in base_df and df shape is : (540455, 5)
+[2023-05-23 16:13:57,414] root - INFO - total values <1 and >40 in Quantity column is : (29218, 5)
+[2023-05-23 16:13:57,437] root - INFO - dropped Quantity <1 and >40
+[2023-05-23 16:13:57,443] root - INFO - total values <1 and >30 in Quantity column is : (104469, 5)
+[2023-05-23 16:13:57,471] root - INFO - dropped UnitPrice <1 and >30
+[2023-05-23 16:13:57,472] root - INFO - converted UnitPrice dtype into 'int' after dropping <1 and >30 values
+[2023-05-23 16:13:57,502] root - INFO -  Total 'Country' values_count less than 500 : (24,)
+[2023-05-23 16:13:57,502] root - INFO - Dropping country value_counts <500
+[2023-05-23 16:13:57,558] root - INFO - Dropped country value_counts <500
+[2023-05-23 16:13:57,558] root - INFO - strip Description
+[2023-05-23 16:13:57,658] root - INFO -  Total 'Description' values_count < 300 : 299
+[2023-05-23 16:13:57,658] root - INFO - Dropping Description value_counts <300
+[2023-05-23 16:13:57,696] root - INFO - after dropping some rows df shape : (403408, 5)
+[2023-05-23 16:13:57,701] root - INFO - data frame :                            Description  Quantity          InvoiceDate  UnitPrice         Country
+0   WHITE HANGING HEART T-LIGHT HOLDER         6  2010-12-01 08:26:00          2  United Kingdom
+1                  WHITE METAL LANTERN         6  2010-12-01 08:26:00          3  United Kingdom
+2       CREAM CUPID HEARTS COAT HANGER         8  2010-12-01 08:26:00          2  United Kingdom
+3  KNITTED UNION FLAG HOT WATER BOTTLE         6  2010-12-01 08:26:00          3  United Kingdom
+4       RED WOOLLY HOTTIE WHITE HEART.         6  2010-12-01 08:26:00          3  United Kingdom
+[2023-05-23 16:13:57,705] root - INFO - dropped null values in base_df
+[2023-05-23 16:13:57,705] root - INFO - dropping rows on condition in train and test data
+[2023-05-23 16:13:57,709] root - INFO - total values <1 and >40 in Quantity column is : (21987, 5)
+[2023-05-23 16:13:57,727] root - INFO - dropped Quantity <1 and >40
+[2023-05-23 16:13:57,732] root - INFO - total values <1 and >30 in Quantity column is : (78221, 5)
+[2023-05-23 16:13:57,755] root - INFO - dropped UnitPrice <1 and >30
+[2023-05-23 16:13:57,756] root - INFO - converted UnitPrice dtype into 'int' after dropping <1 and >30 values
+[2023-05-23 16:13:57,778] root - INFO -  Total 'Country' values_count less than 500 : (28,)
+[2023-05-23 16:13:57,779] root - INFO - Dropping country value_counts <500
+[2023-05-23 16:13:57,802] root - INFO - Dropped country value_counts <500
+[2023-05-23 16:13:57,803] root - INFO - strip Description
+[2023-05-23 16:13:57,883] root - INFO -  Total 'Description' values_count < 300 : 299
+[2023-05-23 16:13:57,883] root - INFO - Dropping Description value_counts <300
+[2023-05-23 16:13:57,910] root - INFO - after dropping some rows df shape : (300891, 5)
+[2023-05-23 16:13:57,915] root - INFO - data frame :                       Description  Quantity          InvoiceDate  UnitPrice         Country
+0      HOME SWEET HOME METAL SIGN        12  2011-04-28 10:20:00          2  United Kingdom
+2  FRENCH BLUE METAL DOOR SIGN No         2  2011-11-08 15:24:00          2  United Kingdom
+3           WALL ART CAT AND BIRD         2  2011-11-09 16:14:00          5  United Kingdom
+5         PINK/PURPLE RETRO RADIO         2  2011-01-20 18:01:00          2  United Kingdom
+6       12 DAISY PEGS IN WOOD BOX        24  2011-01-23 12:08:00          1  United Kingdom
+[2023-05-23 16:13:57,922] root - INFO - total values <1 and >40 in Quantity column is : (7231, 5)
+[2023-05-23 16:13:57,928] root - INFO - dropped Quantity <1 and >40
+[2023-05-23 16:13:57,931] root - INFO - total values <1 and >30 in Quantity column is : (26248, 5)
+[2023-05-23 16:13:57,938] root - INFO - dropped UnitPrice <1 and >30
+[2023-05-23 16:13:57,939] root - INFO - converted UnitPrice dtype into 'int' after dropping <1 and >30 values
+[2023-05-23 16:13:57,946] root - INFO -  Total 'Country' values_count less than 500 : (34,)
+[2023-05-23 16:13:57,946] root - INFO - Dropping country value_counts <500
+[2023-05-23 16:13:57,955] root - INFO - Dropped country value_counts <500
+[2023-05-23 16:13:57,955] root - INFO - strip Description
+[2023-05-23 16:13:57,985] root - INFO -  Total 'Description' values_count < 300 : 292
+[2023-05-23 16:13:57,985] root - INFO - Dropping Description value_counts <300
+[2023-05-23 16:13:57,995] root - INFO - after dropping some rows df shape : (98357, 5)
+[2023-05-23 16:13:57,999] root - INFO - data frame :                            Description  Quantity          InvoiceDate  UnitPrice         Country
+0    T-LIGHT HOLDER SWEETHEART HANGING         8  2011-03-16 10:17:00          1  United Kingdom
+1         3D DOG PICTURE PLAYING CARDS         2  2011-03-22 12:25:00          2  United Kingdom
+2  CERAMIC HEART FAIRY CAKE MONEY BANK         4  2011-10-31 10:17:00          4  United Kingdom
+3          JIGSAW RABBIT AND BIRDHOUSE         1  2011-04-27 17:18:00          3  United Kingdom
+4         T-LIGHT GLASS FLUTED ANTIQUE         4  2010-12-01 17:06:00          2  United Kingdom
+[2023-05-23 16:13:58,000] root - INFO - dropped rows on condition in train and test df train_df .shape = (300891, 5) , test_df.shape = (98357, 5)
+[2023-05-23 16:13:58,000] root - INFO - Writting reprt in yaml file
+[2023-05-23 16:13:58,001] root - INFO - report written into report.yaml
+[2023-05-23 16:13:58,001] root - INFO - storing validation base_df into data validation artifacts
+[2023-05-23 16:13:58,672] root - INFO - storing validation train data into data validation artifacts
+[2023-05-23 16:13:59,209] root - INFO - storing validation test data into data validation artifacts
+[2023-05-23 16:13:59,370] root - INFO - data validation is almost done
+[2023-05-23 16:13:59,370] root - INFO - returning data_validation_artifact
+[2023-05-23 16:13:59,381] root - INFO - ...................Starting data transfomration ..................
+[2023-05-23 16:13:59,381] root - INFO - reading data from valid_feature_store_file...
+[2023-05-23 16:13:59,579] root - INFO - reading data from valid_train_file.....
+[2023-05-23 16:13:59,747] root - INFO - reading data from valid_test_file.....
+[2023-05-23 16:13:59,803] root - INFO - .........handling InvoiceDate column in base_df...........
+[2023-05-23 16:13:59,803] root - INFO - df[InvoiceDate] dtype != datetime, converting into datetime
+[2023-05-23 16:13:59,837] root - INFO - creating columns Day, Month and Year(from 2000) from InvoiceDate
+[2023-05-23 16:13:59,879] root - INFO - Created new columns Day, Month and year and dropped column InvoiceDate
+[2023-05-23 16:13:59,882] root - INFO - handling InvoiceDate in train and test data
+[2023-05-23 16:13:59,882] root - INFO - df[InvoiceDate] dtype != datetime, converting into datetime
+[2023-05-23 16:13:59,937] root - INFO - creating columns Day, Month and Year(from 2000) from InvoiceDate
+[2023-05-23 16:13:59,985] root - INFO - Created new columns Day, Month and year and dropped column InvoiceDate
+[2023-05-23 16:13:59,988] root - INFO - df[InvoiceDate] dtype != datetime, converting into datetime
+[2023-05-23 16:14:00,006] root - INFO - creating columns Day, Month and Year(from 2000) from InvoiceDate
+[2023-05-23 16:14:00,024] root - INFO - Created new columns Day, Month and year and dropped column InvoiceDate
+[2023-05-23 16:14:00,025] root - INFO - handled InvoiceDate.......
+[2023-05-23 16:14:00,025] root - INFO - ......................................................................base_df shape ..................................(403408, 7)
+[2023-05-23 16:14:00,025] root - INFO - ......................................................................train_df shape ..................................(300891, 7)
+[2023-05-23 16:14:00,025] root - INFO - ......................................................................test_df shape ..................................(98357, 7)
+[2023-05-23 16:14:00,030] root - INFO - columns =                            Description  Quantity  UnitPrice         Country  Day  Month  Year
+0   WHITE HANGING HEART T-LIGHT HOLDER         6          2  United Kingdom    1     12    10
+1                  WHITE METAL LANTERN         6          3  United Kingdom    1     12    10
+2       CREAM CUPID HEARTS COAT HANGER         8          2  United Kingdom    1     12    10
+3  KNITTED UNION FLAG HOT WATER BOTTLE         6          3  United Kingdom    1     12    10
+4       RED WOOLLY HOTTIE WHITE HEART.         6          3  United Kingdom    1     12    10
+[2023-05-23 16:14:00,030] root - INFO - .........simple imputer in base_df...........
+[2023-05-23 16:14:00,062] root - INFO - handling simple imputer in train and test data
+[2023-05-23 16:14:00,095] root - INFO - handled simple imputer.......
+[2023-05-23 16:14:00,095] root - INFO - ......................................................................base_df shape ..................................(403408, 7)
+[2023-05-23 16:14:00,095] root - INFO - ......................................................................train_df shape ..................................(300891, 7)
+[2023-05-23 16:14:00,095] root - INFO - ......................................................................test_df shape ..................................(98357, 7)
+[2023-05-23 16:14:00,095] root - INFO - .........encoding objects column in base_df...........
+[2023-05-23 16:14:05,220] root - INFO - handling encoding in train and test data
+[2023-05-23 16:14:21,415] root - INFO - handled encoding.......
+[2023-05-23 16:14:21,416] root - INFO - ......................................................................base_df shape ..................................(403408, 218)
+[2023-05-23 16:14:21,416] root - INFO - ......................................................................train_df shape ..................................(300891, 214)
+[2023-05-23 16:14:21,416] root - INFO - ......................................................................test_df shape ..................................(98357, 208)
+[2023-05-23 16:14:21,416] root - INFO - .........converting column.dtypes into int in base_df...........
+[2023-05-23 16:14:21,416] root - INFO - converting float columns into integer
+[2023-05-23 16:14:21,422] root - INFO - converting column.dtypes into int in train and test data
+[2023-05-23 16:14:21,422] root - INFO - converting float columns into integer
+[2023-05-23 16:14:21,426] root - INFO - converting float columns into integer
+[2023-05-23 16:14:21,428] root - INFO - converted column.dtypes into int.......
+[2023-05-23 16:14:21,428] root - INFO -  ....... creating target columns .............
+[2023-05-23 16:14:21,429] root - INFO - creating target column
+[2023-05-23 16:14:21,430] root - INFO - Created target column -> Total_price
+[2023-05-23 16:14:21,430] root - INFO - handling target column in train and test data
+[2023-05-23 16:14:21,430] root - INFO - creating target column
+[2023-05-23 16:14:21,431] root - INFO - Created target column -> Total_price
+[2023-05-23 16:14:21,431] root - INFO - creating target column
+[2023-05-23 16:14:21,432] root - INFO - Created target column -> Total_price
+[2023-05-23 16:14:21,432] root - INFO - handled target column .......
+[2023-05-23 16:14:21,506] root - INFO - base_df.head :    Quantity  UnitPrice  Day  Month  Year   STRIPEY MICE FELTCRAFT  ...  Norway  Portugal  Spain  Switzerland  United Kingdom  Total_price
+0         6          2    1     12    10                        0  ...       0         0      0            0               1           12
+1         6          3    1     12    10                        0  ...       0         0      0            0               1           18
+2         8          2    1     12    10                        0  ...       0         0      0            0               1           16
+
+[3 rows x 219 columns]
+[2023-05-23 16:14:21,579] root - INFO - train_df.head :    Quantity  UnitPrice  Day  Month  Year   STRIPEY MICE FELTCRAFT  ...  Norway  Portugal  Spain  Switzerland  United Kingdom  Total_price
+0        12          2   28      4    11                        0  ...       0         0      0            0               1           24
+1         2          2    8     11    11                        0  ...       0         0      0            0               1            4
+2         2          5    9     11    11                        0  ...       0         0      0            0               1           10
+
+[3 rows x 215 columns]
+[2023-05-23 16:14:21,653] root - INFO - test_df.head :    Quantity  UnitPrice  Day  Month  Year  ...  ZINC METAL HEART DECORATION  France  Germany  United Kingdom  Total_price
+0         8          1   16      3    11  ...                            0       0        0               1            8
+1         2          2   22      3    11  ...                            0       0        0               1            4
+2         4          4   31     10    11  ...                            0       0        0               1           16
+
+[3 rows x 209 columns]
+[2023-05-23 16:14:21,653] root - INFO - ......................................................................base_df shape ..................................(403408, 219)
+[2023-05-23 16:14:21,653] root - INFO - ......................................................................train_df shape ..................................(300891, 215)
+[2023-05-23 16:14:21,653] root - INFO - ......................................................................test_df shape ..................................(98357, 209)
+[2023-05-23 16:14:21,653] root - INFO - data transformation is almost done.....
+[2023-05-23 16:14:21,653] root - INFO - returning data transformatin artifact

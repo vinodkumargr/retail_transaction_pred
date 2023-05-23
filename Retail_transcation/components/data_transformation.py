@@ -71,31 +71,21 @@ class DataTransformation:
 
     def encode_object_columns(self, df: pd.DataFrame):
         try:
-            max_features_description = 380  # Maximum number of hashed features for Description column
-            max_features_country = 14  # Number of columns to keep for Country column
-            columns = ['Description', 'Country']
-
-            hasher_description = FeatureHasher(n_features=max_features_description, input_type='string')
-            hasher_country = FeatureHasher(n_features=max_features_country, input_type='string')
-
-            hashed_dfs = []
-
-            for column in columns:
-                if column == 'Description':
-                    column_values = df[column].astype(str).values
-                    random.shuffle(column_values)  # Randomly shuffle the values
-                    hashed_features = hasher_description.transform(column_values[:max_features_description])
-                elif column == 'Country':
-                    hashed_features = hasher_country.transform(df[column].astype(str))
-
-                hashed_df = pd.DataFrame(hashed_features.toarray())
-                hashed_df.columns = [f'{column}_{i}' for i in range(hashed_df.shape[1])]
-                hashed_dfs.append(hashed_df)
-
-            # Concatenate the hashed features DataFrames with the original DataFrame
-            df = pd.concat(hashed_dfs, axis=1)
-
-            return df
+            df['Description'] = df['Description'].apply(lambda x: re.sub(r'\d+', '', x))
+            categorical_columns = df.select_dtypes(include='object').columns
+            encoded_dfs = []
+            top_n_values=200
+                    
+            for column in categorical_columns:
+                # Get the top N most frequent values in the column
+                top_values = df[column].value_counts().nlargest(top_n_values).index.tolist()
+                # Filter the column to include only the top N values
+                filtered_column = df[column].where(df[column].isin(top_values), other='Other')
+                encoded_df = pd.get_dummies(filtered_column, drop_first=True, dtype=int, dummy_na=False, prefix='', prefix_sep='')
+                encoded_dfs.append(encoded_df)
+                        
+            f_df = pd.concat([df.drop(categorical_columns, axis=1)] + encoded_dfs, axis=1)
+            return f_df
 
         except Exception as e:
             raise RetailException(e, sys)
@@ -175,6 +165,10 @@ class DataTransformation:
             test_df=self.impute_missing_values(df=test_df)
             logging.info("handled simple imputer.......")
 
+            logging.info (f"......................................................................base_df shape ..................................{base_df.shape}")
+            logging.info (f"......................................................................train_df shape ..................................{train_df.shape}")
+            logging.info (f"......................................................................test_df shape ..................................{test_df.shape}")
+
 
             # encode onject columns:
 
@@ -185,6 +179,10 @@ class DataTransformation:
             train_df=self.encode_object_columns(df=train_df)
             test_df=self.encode_object_columns(df=test_df)
             logging.info("handled encoding.......")
+
+            logging.info (f"......................................................................base_df shape ..................................{base_df.shape}")
+            logging.info (f"......................................................................train_df shape ..................................{train_df.shape}")
+            logging.info (f"......................................................................test_df shape ..................................{test_df.shape}")
 
 
             #converting data-types into int
@@ -207,12 +205,14 @@ class DataTransformation:
             logging.info("handled target column .......")
 
 
-            df=pd.get_dummies(df, columns=config.ENCODING_COLUMNS, 
-                                    drop_first=True,dtype=int, dummy_na=False, prefix='', prefix_sep='')
-
             logging.info(f"base_df.head : {base_df.head(3)}")
             logging.info(f"train_df.head : {train_df.head(3)}")
             logging.info(f"test_df.head : {test_df.head(3)}")
+
+
+            logging.info (f"......................................................................base_df shape ..................................{base_df.shape}")
+            logging.info (f"......................................................................train_df shape ..................................{train_df.shape}")
+            logging.info (f"......................................................................test_df shape ..................................{test_df.shape}")
 
 
             logging.info("data transformation is almost done.....")
