@@ -17,12 +17,10 @@ import random
 class DataTransformation:
 
     def __init__(self, data_transformation_cofig:config_entity.DataTransformationConfig,
-                        data_ingestion_artifacts:artifacts_entity.DataIngestionArtifact,
                         data_validation_artifacts:artifacts_entity.DataValidationArtifact):
         try:
             
             self.data_transformation_config=data_transformation_cofig
-            self.data_ingestion_artifacts = data_ingestion_artifacts
             self.data_validation_artifacts = data_validation_artifacts
 
         except Exception as e:
@@ -32,12 +30,11 @@ class DataTransformation:
     def handle_InvoiceDate(self, df:pd.DataFrame):
         try:
             if df['InvoiceDate'].dtype !='datetime':
-                logging.info('df[InvoiceDate] dtype != datetime, converting into datetime')
+                logging.info(f'df[InvoiceDate] dtype != datetime, converting into datetime in {df}')
                 df['InvoiceDate'] = pd.to_datetime(df['InvoiceDate'])
             else:
                 pass
-            
-            logging.info('creating columns Day, Month and Year(from 2000) from InvoiceDate')
+
 
             df['Day']=df['InvoiceDate'].dt.day
             df['Month']=df['InvoiceDate'].dt.month
@@ -45,7 +42,7 @@ class DataTransformation:
 
             df = df.drop(['InvoiceDate'],axis=1)
 
-            logging.info("Created new columns Day, Month and year and dropped column InvoiceDate")
+            logging.info(f"Created new columns Day, Month and year and dropped column InvoiceDate in {df}")
 
             return df
 
@@ -77,10 +74,12 @@ class DataTransformation:
             top_n_values=200
                     
             for column in categorical_columns:
-                # Get the top N most frequent values in the column
+                # Get the top N most frequent values in the column and convert into list
                 top_values = df[column].value_counts().nlargest(top_n_values).index.tolist()
+
                 # Filter the column to include only the top N values
                 filtered_column = df[column].where(df[column].isin(top_values), other='Other')
+
                 encoded_df = pd.get_dummies(filtered_column, drop_first=True, dtype=int, dummy_na=False, prefix='', prefix_sep='')
                 encoded_dfs.append(encoded_df)
                         
@@ -94,8 +93,6 @@ class DataTransformation:
         
     def convert_dtypes_into_int(self, df:pd.DataFrame):
         try:
-
-            logging.info("converting float columns into integer")
 
             for column in df.columns:
                 if column in ['Day', 'Month', 'Year']:
@@ -112,10 +109,7 @@ class DataTransformation:
     def create_target_column(self, df:pd.DataFrame): 
         try:
 
-            logging.info('creating target column')
-
             df['Total_price'] = df['Quantity'] * df['UnitPrice']
-            logging.info('Created target column -> Total_price')
 
             return df
 
@@ -140,7 +134,7 @@ class DataTransformation:
 
 
             # handling INvoiceDate:
-            logging.info(".........handling InvoiceDate column in base_df...........")
+            logging.info("handling InvoiceDate column in base_df")
             base_df=self.handle_InvoiceDate(df = base_df)
 
             logging.info("handling InvoiceDate in train and test data")
@@ -149,15 +143,9 @@ class DataTransformation:
             logging.info("handled InvoiceDate.......")
 
 
-            logging.info (f"......................................................................base_df shape ..................................{base_df.shape}")
-            logging.info (f"......................................................................train_df shape ..................................{train_df.shape}")
-            logging.info (f"......................................................................test_df shape ..................................{test_df.shape}")
-
-            logging.info(f"columns = {base_df.head(5)}")
-
 
             # simple imputer
-            logging.info(".........simple imputer in base_df...........")
+            logging.info(".simple imputer in base_df..")
             base_df=self.impute_missing_values(df=base_df)
 
             logging.info("handling simple imputer in train and test data")
@@ -165,13 +153,9 @@ class DataTransformation:
             test_df=self.impute_missing_values(df=test_df)
             logging.info("handled simple imputer.......")
 
-            logging.info (f"......................................................................base_df shape ..................................{base_df.shape}")
-            logging.info (f"......................................................................train_df shape ..................................{train_df.shape}")
-            logging.info (f"......................................................................test_df shape ..................................{test_df.shape}")
 
 
             # encode onject columns:
-
             logging.info(".........encoding objects column in base_df...........")
             base_df=self.encode_object_columns(df=base_df)
 
@@ -180,9 +164,6 @@ class DataTransformation:
             test_df=self.encode_object_columns(df=test_df)
             logging.info("handled encoding.......")
 
-            logging.info (f"......................................................................base_df shape ..................................{base_df.shape}")
-            logging.info (f"......................................................................train_df shape ..................................{train_df.shape}")
-            logging.info (f"......................................................................test_df shape ..................................{test_df.shape}")
 
 
             #converting data-types into int
@@ -193,6 +174,7 @@ class DataTransformation:
             train_df=self.convert_dtypes_into_int(df=train_df)
             test_df=self.convert_dtypes_into_int(df=test_df)
             logging.info("converted column.dtypes into int.......")
+
 
 
             # creating target column:
@@ -210,12 +192,27 @@ class DataTransformation:
             logging.info(f"test_df.head : {test_df.head(3)}")
 
 
-            logging.info (f"......................................................................base_df shape ..................................{base_df.shape}")
-            logging.info (f"......................................................................train_df shape ..................................{train_df.shape}")
-            logging.info (f"......................................................................test_df shape ..................................{test_df.shape}")
+            logging.info (f".......base_df shape ...{base_df.shape}")
+            logging.info (f".......train_df shape ..{train_df.shape}")
+            logging.info (f".......test_df shape ...{test_df.shape}")
 
 
-            logging.info("data transformation is almost done.....")
+            logging.info("data transformation is almost done.......")
+
+
+            #saving transformed data into data_transformation artifacts
+            logging.info("saving transformed data into data_transformation artifacts")
+
+            base_df.to_csv(path_or_buf=self.data_transformation_config.transform_feature_store_path, index=False, header=True)
+            logging.info("saved transfomred base_df into data_transformation artifacts ")
+
+            train_df.to_csv(path_or_buf=self.data_transformation_config.transform_train_file_path, index=False, header=True)
+            logging.info("saved transfomred train_df into data_transformation artifacts ")
+
+            test_df.to_csv(path_or_buf=self.data_transformation_config.transform_test_file_path, index=False, header=True)
+            logging.info("saved transfomred test_df into data_transformation artifacts ")
+
+
 
             data_transformation_Artifact=artifacts_entity.DataTransformationArtifact(
                 transform_feature_store_path=self.data_transformation_config.transform_feature_store_path,

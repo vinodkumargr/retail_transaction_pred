@@ -20,3 +20,10 @@ class DataTransformationArtifact:
     transform_train_path:str
     transform_test_path:str
 
+
+@dataclass
+class ModelTrainerArtifact:
+    model_path:str
+    r2_train_score:str
+    r2_test_score:str
+

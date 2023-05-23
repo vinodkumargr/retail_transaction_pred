@@ -89,3 +89,22 @@ class DataTransformationConfig:
 
         except Exception as e:
             raise RetailException(e,sys)
+        
+
+class ModeTrainerConfig:
+
+    def __init__(self, training_pipeline_config:TrainingPipelineConfig):
+        try:
+
+            self.model_trainer_dir = os.path.join(training_pipeline_config.artifact_dir,"model_trainer")
+            os.makedirs(self.model_trainer_dir, exist_ok=True)
+
+            self.model_dir = os.path.join(self.model_path, "model")
+            os.makedirs(self.model_dir, exist_ok=True)
+            self.model_path = os.path.join(self.model_dir,"model.pkl")
+
+            self.expected_r2_score = 0.75
+            self.overfitting_value = 0.3
+
+        except Exception as e:
+            raise RetailException(e,sys)

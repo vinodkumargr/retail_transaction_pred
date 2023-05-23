@@ -4,6 +4,7 @@ from Retail_transcation import utils
 from Retail_transcation.components.data_ingestion import DataIngestion
 from Retail_transcation.components.data_validation import DataValidation
 from Retail_transcation.components.data_transformation import DataTransformation
+from Retail_transcation.components.model_trainer import ModelTrainer
 from Retail_transcation.entity import config_entity, artifacts_entity
 import os, sys
 
@@ -42,5 +43,14 @@ if __name__=="__main__":
         
         data_transformation_artifact=data_transformation.initiate_data_transformation()
 
+
+        # model trainer
+
+        model_trainer_config=config_entity.ModeTrainerConfig(training_pipeline_config=training_pipeline_config)
+        model_trainer = ModelTrainer(model_trainer_config=model_trainer_config,
+            data_transformation_artifacts=data_transformation_artifact)
+        
+        model_trainer_artifact=model_trainer.initiate_model_trainer()
+
     except Exception as e:
-        print(e)
+        raise RetailException(e, sys)

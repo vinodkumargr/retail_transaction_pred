@@ -30,9 +30,10 @@ class DataValidation:
             
             null_report = df.isnull().sum(axis=1)/df.shape[0]
             drop_null_value_column_rows = null_report[null_report > 0.00].index
+            
             self.data_validation_errors[report_key_names] = list(drop_null_value_column_rows.shape)
 
-            #df = df.drop(list(drop_null_value_column_rows), axis=0)
+            df = df.drop(list(drop_null_value_column_rows), axis=0)
             df = df.dropna(axis=0)
             
             logging.info(f"now shape of df : {df.shape}")
@@ -70,53 +71,37 @@ class DataValidation:
     def drop_rows_on_condition(self,df:pd.DataFrame):
         try:
 
+
             # drop rows for quantity less than 1 and greater than 40
             drop_quantity = df[(df['Quantity'] < 1) | (df['Quantity'] > 40)]
             drop_quantity_shape = drop_quantity.shape
 
-            logging.info(f"total values <1 and >40 in Quantity column is : {drop_quantity_shape}")
             df = df.drop(drop_quantity.index, axis=0)
 
-            logging.info("dropped Quantity <1 and >40")
 
 
             # drop rows for UnitPrice less than 1 and greater than 30
             drop_UnitPrice = df[(df['UnitPrice'] < 1) | (df['UnitPrice'] > 30)]
-            drop_UnitPrice_shape = drop_UnitPrice.shape
-            
-            logging.info(f"total values <1 and >30 in Quantity column is : {drop_UnitPrice_shape}")
             df = df.drop(drop_UnitPrice.index, axis=0)
-            logging.info("dropped UnitPrice <1 and >30")
 
             df["UnitPrice"] = df['UnitPrice'].astype(int)
-            logging.info("converted UnitPrice dtype into 'int' after dropping <1 and >30 values")
+
 
 
             # drop rows for Country <500
             drop_country = df['Country'].value_counts()[df['Country'].value_counts() <500]
-            logging.info(f" Total 'Country' values_count less than 500 : {drop_country.shape}")
             drop_country_index=drop_country.index
 
-            logging.info("Dropping country value_counts <500")
             df = df.drop(df[df['Country'].isin(drop_country_index)].index, axis=0)
 
-            logging.info("Dropped country value_counts <500")
 
 
             # drop rows for Description < 300
-            logging.info("strip Description")
             df['Description']=df['Description'].str.strip()
-
             drop_Description = df['Description'].value_counts()[df['Description'].value_counts() < 300]
-            logging.info(f" Total 'Description' values_count < 300 : {drop_Description[0]}")
-            drop_Description_index=drop_country.index
+            drop_Description_index=drop_Description.index
 
-            logging.info("Dropping Description value_counts <300")
             df = df.drop(df[df['Description'].isin(drop_Description_index)].index, axis=0)
-
-            logging.info(f"after dropping some rows df shape : {df.shape}")
-
-            logging.info(f"data frame : {df.head(5)}")
 
             return df
 
@@ -127,17 +112,13 @@ class DataValidation:
 
     def initiate_data_validation(self)->artifacts_entity.DataValidationArtifact:
         try:
-            logging.info("data validation started :")
+            logging.info("data validation started........")
 
             base_df = pd.read_csv(self.data_validation_config.base_file_path)
             train_df = pd.read_csv(self.data_ingestion_artifacts.train_file_path)
             test_df = pd.read_csv(self.data_ingestion_artifacts.test_file_path)
 
-            #base_df.replace({"na", np.NAN}, inplace=True)
-            #logging.info("replaced na with np.NAN")
 
-
-            logging.info("____________________dropping null values, axis=0_________________________")
             logging.info(f"dropping null values in base_df, axsi-0 and df shape is : {base_df.shape}")
             base_df = self.drop_null_value_rows(df=base_df,report_key_names="dropping_missing_value_rows_in_base_df")
 
