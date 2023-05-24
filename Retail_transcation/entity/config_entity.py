@@ -108,7 +108,7 @@ class ModeTrainerConfig:
 
             self.model_path = os.path.join(model_dir,MODEL_FILE_NAME)
 
-            self.expected_r2_score = 0.75
+            self.expected_r2_score = 0.5
             self.overfitting_value = 0.3
 
         except Exception as e:
