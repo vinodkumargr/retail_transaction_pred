@@ -5,6 +5,7 @@ from Retail_transcation.components.data_ingestion import DataIngestion
 from Retail_transcation.components.data_validation import DataValidation
 from Retail_transcation.components.data_transformation import DataTransformation
 from Retail_transcation.components.model_trainer import ModelTrainer
+from Retail_transcation.components.model_evaluation import ModelEvaluation
 from Retail_transcation.entity import config_entity, artifacts_entity
 import os, sys
 
@@ -38,7 +39,6 @@ if __name__=="__main__":
 
         data_transformation_config=config_entity.DataTransformationConfig(training_pipeline_config=training_pipeline_config)
         data_transformation = DataTransformation(data_transformation_cofig=data_transformation_config,
-                                                    data_ingestion_artifacts=data_ingestion_artifact,
                                                     data_validation_artifacts=data_validation_artifact)
         
         data_transformation_artifact=data_transformation.initiate_data_transformation()
@@ -48,9 +48,21 @@ if __name__=="__main__":
 
         model_trainer_config=config_entity.ModeTrainerConfig(training_pipeline_config=training_pipeline_config)
         model_trainer = ModelTrainer(model_trainer_config=model_trainer_config,
-            data_transformation_artifacts=data_transformation_artifact)
+                                    data_transformation_artifacts=data_transformation_artifact)
         
         model_trainer_artifact=model_trainer.initiate_model_trainer()
+
+
+        # model Evaluation
+        model_evaluation_config = config_entity.ModeEvaluationConfig(training_pipeline_config=training_pipeline_config)
+        model_evaluation = ModelEvaluation(model_evaluation_config=model_evaluation_config,
+                                           data_ingestion_artifacts=data_ingestion_artifact,
+                                           data_validation_artifacts=data_validation_artifact,
+                                           data_transformation_artifacts=data_transformation_artifact,
+                                           model_trainer_artifacts=model_trainer_artifact)
+        
+        model_evaluation_artifact = model_evaluation.initiate_model_evaluation()
+
 
     except Exception as e:
         raise RetailException(e, sys)

@@ -11,6 +11,8 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import r2_score
+from sklearn.tree import DecisionTreeRegressor
+
 
 
 class ModelTrainer:
@@ -41,12 +43,24 @@ class ModelTrainer:
         try:
 
             logging.info("Reading traina nd test data from data_transformation artifacts...")
-            train_df = pd.read_csv(self.data_transformation_artifacts.transform_train_path)
-            test_df = pd.read_csv(self.data_transformation_artifacts.transform_test_path)
+            df = pd.read_csv(self.data_transformation_artifacts.transform_feature_store_path)
+
+            logging.info("Splitting data into input and output features (x,y)...")
+            x = df.drop(columns = ['Total_price'], axis=1)
+            y = df['Total_price']
+
+
+            for i in x.columns:
+                if i == "Total_price":
+                    logging.info(f"output column is present in x : {i}")
+            
 
             logging.info("splitting train and test data into x_train, x_test and y_train, y_test ...")
-            x_train, y_train = train_df.drop(config.TARGET_COLUMN, axis=1) , train_df[config.TARGET_COLUMN]
-            x_test, y_test = test_df.drop(config.TARGET_COLUMN, axis=1) , test_df[config.TARGET_COLUMN]
+
+            x_train, x_test, y_train, y_test = train_test_split(x, y, random_state=22)
+
+            logging.info(f"X_train shape is : {x_train.shape}")
+            logging.info(f"x_test shape is : {x_test.shape}")
 
             logging.info("ready to fit tdata to model...")
             model = self.linear_regression_algorith(x_train=x_train, y_train=y_train)
@@ -55,17 +69,17 @@ class ModelTrainer:
             logging.info("predict for x_test...")
             y_pred_test = model.predict(x_test)
             r2_test_score = r2_score(y_true=y_test, y_pred=y_pred_test)
-            logging.info("predicted for x_test")
+            logging.info(f"predicted for x_test : {r2_test_score}")
 
 
             logging.info("predict for x_train...")
             y_pred_train = model.predict(x_train)
             r2_train_score = r2_score(y_true=y_train, y_pred=y_pred_train)
-            logging.info("predicted for x_train")
+            logging.info(f"predicted for x_train : {r2_train_score}")
 
-            logging.info("calculating absolute diff between r2_train_score and r2_test_score")
+            
             diff=abs(r2_train_score - r2_test_score)
-
+            logging.info(f"calculating absolute diff between r2_train_score and r2_test_score, :  {diff}")
 
             logging.info("observing model performance whether is underfitted or overfitted...")
             if r2_test_score < self.model_trainer_config.expected_r2_score:
@@ -88,10 +102,6 @@ class ModelTrainer:
 
         except Exception as e:
             raise RetailException(e,sys)
-
-
-
-
 
 
 

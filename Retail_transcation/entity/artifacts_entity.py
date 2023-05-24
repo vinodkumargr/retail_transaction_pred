@@ -24,6 +24,11 @@ class DataTransformationArtifact:
 @dataclass
 class ModelTrainerArtifact:
     model_path:str
-    r2_train_score:str
-    r2_test_score:str
+    r2_train_score:float
+    r2_test_score:float
 
+
+@dataclass
+class ModelEvaluationArtifact:
+    model_eccepted:bool
+    improved_accuracy:float

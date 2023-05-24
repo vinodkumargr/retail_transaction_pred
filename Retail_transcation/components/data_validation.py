@@ -74,8 +74,6 @@ class DataValidation:
 
             # drop rows for quantity less than 1 and greater than 40
             drop_quantity = df[(df['Quantity'] < 1) | (df['Quantity'] > 40)]
-            drop_quantity_shape = drop_quantity.shape
-
             df = df.drop(drop_quantity.index, axis=0)
 
 
@@ -114,9 +112,9 @@ class DataValidation:
         try:
             logging.info("data validation started........")
 
-            base_df = pd.read_csv(self.data_validation_config.base_file_path)
-            train_df = pd.read_csv(self.data_ingestion_artifacts.train_file_path)
-            test_df = pd.read_csv(self.data_ingestion_artifacts.test_file_path)
+            base_df = pd.read_csv(self.data_ingestion_artifacts.feature_store_path)
+            train_df = pd.read_csv(self.data_ingestion_artifacts.feature_store_path)
+            test_df = pd.read_csv(self.data_ingestion_artifacts.feature_store_path)
 
 
             logging.info(f"dropping null values in base_df, axsi-0 and df shape is : {base_df.shape}")

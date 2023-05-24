@@ -1,0 +1,193 @@
+[2023-05-24 22:00:37,398] root - INFO - printing dict data : {'database_name': 'online_retail', 'collection_name': 'online_retail', 'data_ingestion_dir': '/home/vinod/projects/retail_transaction_pred/artifacts/data_ingestion', 'feature_store_path': '/home/vinod/projects/retail_transaction_pred/Online Retail.csv', 'train_file_path': '/home/vinod/projects/retail_transaction_pred/artifacts/data_ingestion/data_split/train.csv', 'test_file_path': '/home/vinod/projects/retail_transaction_pred/artifacts/data_ingestion/data_split/test.csv'}
+[2023-05-24 22:00:37,398] root - INFO - Starting data ingestion
+[2023-05-24 22:00:37,887] root - INFO - got data from mongodb
+[2023-05-24 22:00:37,887] root - INFO - creating feature store dir
+[2023-05-24 22:00:37,887] root - INFO - storing into feature store dir
+[2023-05-24 22:00:39,427] root - INFO - spliting data into train and test
+[2023-05-24 22:00:39,517] root - INFO - create dataset_dir if not exist
+[2023-05-24 22:00:39,518] root - INFO - save dataset to feature store after split
+[2023-05-24 22:00:40,861] root - INFO - data validation started........
+[2023-05-24 22:00:42,073] root - INFO - dropping null values in base_df, axsi-0 and df shape is : (541909, 8)
+[2023-05-24 22:00:42,262] root - INFO - now shape of df : (540455, 8)
+[2023-05-24 22:00:42,262] root - INFO - columns : Index(['InvoiceNo', 'StockCode', 'Description', 'Quantity', 'InvoiceDate',
+       'UnitPrice', 'CustomerID', 'Country'],
+      dtype='object')
+[2023-05-24 22:00:42,266] root - INFO - dropping null values in train and test df, axis-0
+[2023-05-24 22:00:42,471] root - INFO - now shape of df : (540455, 8)
+[2023-05-24 22:00:42,471] root - INFO - columns : Index(['InvoiceNo', 'StockCode', 'Description', 'Quantity', 'InvoiceDate',
+       'UnitPrice', 'CustomerID', 'Country'],
+      dtype='object')
+[2023-05-24 22:00:42,661] root - INFO - now shape of df : (540455, 8)
+[2023-05-24 22:00:42,661] root - INFO - columns : Index(['InvoiceNo', 'StockCode', 'Description', 'Quantity', 'InvoiceDate',
+       'UnitPrice', 'CustomerID', 'Country'],
+      dtype='object')
+[2023-05-24 22:00:42,665] root - INFO - dropped null values, axis=0 train_df .shape = (540455, 8) , test_df.shape = (540455, 8)
+[2023-05-24 22:00:42,665] root - INFO - ____________________dropping unwanted cols, axis=1_________________________
+[2023-05-24 22:00:42,665] root - INFO - dropping null values in base_df, axsi-0 and df shape is : (540455, 8)
+[2023-05-24 22:00:42,665] root - INFO - found unwanted columns: ['InvoiceNo', 'StockCode', 'CustomerID']
+[2023-05-24 22:00:42,675] root - INFO - dropped unwanted columns: ['InvoiceNo', 'StockCode', 'CustomerID']
+[2023-05-24 22:00:42,675] root - INFO - data shape: (540455, 5)
+[2023-05-24 22:00:42,681] root - INFO - dropping null values in train and test df, axis-0
+[2023-05-24 22:00:42,681] root - INFO - found unwanted columns: ['InvoiceNo', 'StockCode', 'CustomerID']
+[2023-05-24 22:00:42,690] root - INFO - dropped unwanted columns: ['InvoiceNo', 'StockCode', 'CustomerID']
+[2023-05-24 22:00:42,690] root - INFO - data shape: (540455, 5)
+[2023-05-24 22:00:42,695] root - INFO - found unwanted columns: ['InvoiceNo', 'StockCode', 'CustomerID']
+[2023-05-24 22:00:42,704] root - INFO - dropped unwanted columns: ['InvoiceNo', 'StockCode', 'CustomerID']
+[2023-05-24 22:00:42,704] root - INFO - data shape: (540455, 5)
+[2023-05-24 22:00:42,709] root - INFO - dropped unwanted cols in train and test train_df .shape = (540455, 5) , test_df.shape = (540455, 5)
+[2023-05-24 22:00:42,709] root - INFO - ____________________dropping rows on condition(outliers), axis=1_________________________
+[2023-05-24 22:00:42,710] root - INFO - dropping rows on condition in base_df and df shape is : (540455, 5)
+[2023-05-24 22:00:42,981] root - INFO - dropped null values in base_df
+[2023-05-24 22:00:42,981] root - INFO - dropping rows on condition in train and test data
+[2023-05-24 22:00:43,538] root - INFO - dropped rows on condition in train and test df train_df .shape = (202341, 5) , test_df.shape = (202341, 5)
+[2023-05-24 22:00:43,539] root - INFO - Writting reprt in yaml file
+[2023-05-24 22:00:43,540] root - INFO - report written into report.yaml
+[2023-05-24 22:00:43,540] root - INFO - storing validation base_df into data validation artifacts
+[2023-05-24 22:00:43,827] root - INFO - storing validation train data into data validation artifacts
+[2023-05-24 22:00:44,116] root - INFO - storing validation test data into data validation artifacts
+[2023-05-24 22:00:44,403] root - INFO - data validation is almost done
+[2023-05-24 22:00:44,403] root - INFO - returning data_validation_artifact
+[2023-05-24 22:00:44,412] root - INFO - ...................Starting data transfomration ..................
+[2023-05-24 22:00:44,412] root - INFO - reading data from valid_feature_store_file...
+[2023-05-24 22:00:44,511] root - INFO - reading data from valid_train_file.....
+[2023-05-24 22:00:44,610] root - INFO - reading data from valid_test_file.....
+[2023-05-24 22:00:44,705] root - INFO - handling InvoiceDate column in base_df
+[2023-05-24 22:00:44,792] root - INFO - df[InvoiceDate] dtype != datetime, converting into datetime in                                 Description  Quantity          InvoiceDate  UnitPrice         Country
+0        WHITE HANGING HEART T-LIGHT HOLDER         6  2010-12-01 08:26:00          2  United Kingdom
+1                       WHITE METAL LANTERN         6  2010-12-01 08:26:00          3  United Kingdom
+2       KNITTED UNION FLAG HOT WATER BOTTLE         6  2010-12-01 08:26:00          3  United Kingdom
+3            RED WOOLLY HOTTIE WHITE HEART.         6  2010-12-01 08:26:00          3  United Kingdom
+4              SET 7 BABUSHKA NESTING BOXES         2  2010-12-01 08:26:00          7  United Kingdom
+...                                     ...       ...                  ...        ...             ...
+202336           ALARM CLOCK BAKELIKE IVORY         4  2011-12-09 12:50:00          3          France
+202337      CHILDRENS APRON SPACEBOY DESIGN         8  2011-12-09 12:50:00          1          France
+202338                   SPACEBOY LUNCH BOX        12  2011-12-09 12:50:00          1          France
+202339           CHILDRENS CUTLERY SPACEBOY         4  2011-12-09 12:50:00          4          France
+202340         BAKING SET 9 PIECE RETROSPOT         3  2011-12-09 12:50:00          4          France
+
+[202341 rows x 5 columns]
+[2023-05-24 22:00:44,842] root - INFO - Created new columns Day, Month and year and dropped column InvoiceDate in                                 Description  Quantity  UnitPrice         Country  Day  Month  Year
+0        WHITE HANGING HEART T-LIGHT HOLDER         6          2  United Kingdom    1     12    10
+1                       WHITE METAL LANTERN         6          3  United Kingdom    1     12    10
+2       KNITTED UNION FLAG HOT WATER BOTTLE         6          3  United Kingdom    1     12    10
+3            RED WOOLLY HOTTIE WHITE HEART.         6          3  United Kingdom    1     12    10
+4              SET 7 BABUSHKA NESTING BOXES         2          7  United Kingdom    1     12    10
+...                                     ...       ...        ...             ...  ...    ...   ...
+202336           ALARM CLOCK BAKELIKE IVORY         4          3          France    9     12    11
+202337      CHILDRENS APRON SPACEBOY DESIGN         8          1          France    9     12    11
+202338                   SPACEBOY LUNCH BOX        12          1          France    9     12    11
+202339           CHILDRENS CUTLERY SPACEBOY         4          4          France    9     12    11
+202340         BAKING SET 9 PIECE RETROSPOT         3          4          France    9     12    11
+
+[202341 rows x 7 columns]
+[2023-05-24 22:00:44,844] root - INFO - handling InvoiceDate in train and test data
+[2023-05-24 22:00:44,849] root - INFO - df[InvoiceDate] dtype != datetime, converting into datetime in                                 Description  Quantity          InvoiceDate  UnitPrice         Country
+0        WHITE HANGING HEART T-LIGHT HOLDER         6  2010-12-01 08:26:00          2  United Kingdom
+1                       WHITE METAL LANTERN         6  2010-12-01 08:26:00          3  United Kingdom
+2       KNITTED UNION FLAG HOT WATER BOTTLE         6  2010-12-01 08:26:00          3  United Kingdom
+3            RED WOOLLY HOTTIE WHITE HEART.         6  2010-12-01 08:26:00          3  United Kingdom
+4              SET 7 BABUSHKA NESTING BOXES         2  2010-12-01 08:26:00          7  United Kingdom
+...                                     ...       ...                  ...        ...             ...
+202336           ALARM CLOCK BAKELIKE IVORY         4  2011-12-09 12:50:00          3          France
+202337      CHILDRENS APRON SPACEBOY DESIGN         8  2011-12-09 12:50:00          1          France
+202338                   SPACEBOY LUNCH BOX        12  2011-12-09 12:50:00          1          France
+202339           CHILDRENS CUTLERY SPACEBOY         4  2011-12-09 12:50:00          4          France
+202340         BAKING SET 9 PIECE RETROSPOT         3  2011-12-09 12:50:00          4          France
+
+[202341 rows x 5 columns]
+[2023-05-24 22:00:44,893] root - INFO - Created new columns Day, Month and year and dropped column InvoiceDate in                                 Description  Quantity  UnitPrice         Country  Day  Month  Year
+0        WHITE HANGING HEART T-LIGHT HOLDER         6          2  United Kingdom    1     12    10
+1                       WHITE METAL LANTERN         6          3  United Kingdom    1     12    10
+2       KNITTED UNION FLAG HOT WATER BOTTLE         6          3  United Kingdom    1     12    10
+3            RED WOOLLY HOTTIE WHITE HEART.         6          3  United Kingdom    1     12    10
+4              SET 7 BABUSHKA NESTING BOXES         2          7  United Kingdom    1     12    10
+...                                     ...       ...        ...             ...  ...    ...   ...
+202336           ALARM CLOCK BAKELIKE IVORY         4          3          France    9     12    11
+202337      CHILDRENS APRON SPACEBOY DESIGN         8          1          France    9     12    11
+202338                   SPACEBOY LUNCH BOX        12          1          France    9     12    11
+202339           CHILDRENS CUTLERY SPACEBOY         4          4          France    9     12    11
+202340         BAKING SET 9 PIECE RETROSPOT         3          4          France    9     12    11
+
+[202341 rows x 7 columns]
+[2023-05-24 22:00:44,900] root - INFO - df[InvoiceDate] dtype != datetime, converting into datetime in                                 Description  Quantity          InvoiceDate  UnitPrice         Country
+0        WHITE HANGING HEART T-LIGHT HOLDER         6  2010-12-01 08:26:00          2  United Kingdom
+1                       WHITE METAL LANTERN         6  2010-12-01 08:26:00          3  United Kingdom
+2       KNITTED UNION FLAG HOT WATER BOTTLE         6  2010-12-01 08:26:00          3  United Kingdom
+3            RED WOOLLY HOTTIE WHITE HEART.         6  2010-12-01 08:26:00          3  United Kingdom
+4              SET 7 BABUSHKA NESTING BOXES         2  2010-12-01 08:26:00          7  United Kingdom
+...                                     ...       ...                  ...        ...             ...
+202336           ALARM CLOCK BAKELIKE IVORY         4  2011-12-09 12:50:00          3          France
+202337      CHILDRENS APRON SPACEBOY DESIGN         8  2011-12-09 12:50:00          1          France
+202338                   SPACEBOY LUNCH BOX        12  2011-12-09 12:50:00          1          France
+202339           CHILDRENS CUTLERY SPACEBOY         4  2011-12-09 12:50:00          4          France
+202340         BAKING SET 9 PIECE RETROSPOT         3  2011-12-09 12:50:00          4          France
+
+[202341 rows x 5 columns]
+[2023-05-24 22:00:44,944] root - INFO - Created new columns Day, Month and year and dropped column InvoiceDate in                                 Description  Quantity  UnitPrice         Country  Day  Month  Year
+0        WHITE HANGING HEART T-LIGHT HOLDER         6          2  United Kingdom    1     12    10
+1                       WHITE METAL LANTERN         6          3  United Kingdom    1     12    10
+2       KNITTED UNION FLAG HOT WATER BOTTLE         6          3  United Kingdom    1     12    10
+3            RED WOOLLY HOTTIE WHITE HEART.         6          3  United Kingdom    1     12    10
+4              SET 7 BABUSHKA NESTING BOXES         2          7  United Kingdom    1     12    10
+...                                     ...       ...        ...             ...  ...    ...   ...
+202336           ALARM CLOCK BAKELIKE IVORY         4          3          France    9     12    11
+202337      CHILDRENS APRON SPACEBOY DESIGN         8          1          France    9     12    11
+202338                   SPACEBOY LUNCH BOX        12          1          France    9     12    11
+202339           CHILDRENS CUTLERY SPACEBOY         4          4          France    9     12    11
+202340         BAKING SET 9 PIECE RETROSPOT         3          4          France    9     12    11
+
+[202341 rows x 7 columns]
+[2023-05-24 22:00:44,946] root - INFO - handled InvoiceDate.......
+[2023-05-24 22:00:44,946] root - INFO - .simple imputer in base_df..
+[2023-05-24 22:00:44,961] root - INFO - handling simple imputer in train and test data
+[2023-05-24 22:00:44,991] root - INFO - handled simple imputer.......
+[2023-05-24 22:00:44,991] root - INFO - .........encoding objects column in base_df...........
+[2023-05-24 22:00:45,463] root - INFO - handling encoding in train and test data
+[2023-05-24 22:00:46,553] root - INFO - handled encoding.......
+[2023-05-24 22:00:46,553] root - INFO - .........converting column.dtypes into int in base_df...........
+[2023-05-24 22:00:46,557] root - INFO - converting column.dtypes into int in train and test data
+[2023-05-24 22:00:46,563] root - INFO - converted column.dtypes into int.......
+[2023-05-24 22:00:46,563] root - INFO -  ....... creating target columns .............
+[2023-05-24 22:00:46,564] root - INFO - handling target column in train and test data
+[2023-05-24 22:00:46,566] root - INFO - handled target column .......
+[2023-05-24 22:00:46,641] root - INFO - base_df.head :    Quantity  UnitPrice  Day  Month  Year   STRIPEY MICE FELTCRAFT  ...  Norway  Portugal  Spain  Switzerland  United Kingdom  Total_price
+0         6          2    1     12    10                        0  ...       0         0      0            0               1           12
+1         6          3    1     12    10                        0  ...       0         0      0            0               1           18
+2         6          3    1     12    10                        0  ...       0         0      0            0               1           18
+
+[3 rows x 219 columns]
+[2023-05-24 22:00:46,709] root - INFO - train_df.head :    Quantity  UnitPrice  Day  Month  Year   STRIPEY MICE FELTCRAFT  ...  Norway  Portugal  Spain  Switzerland  United Kingdom  Total_price
+0         6          2    1     12    10                        0  ...       0         0      0            0               1           12
+1         6          3    1     12    10                        0  ...       0         0      0            0               1           18
+2         6          3    1     12    10                        0  ...       0         0      0            0               1           18
+
+[3 rows x 219 columns]
+[2023-05-24 22:00:46,776] root - INFO - test_df.head :    Quantity  UnitPrice  Day  Month  Year   STRIPEY MICE FELTCRAFT  ...  Norway  Portugal  Spain  Switzerland  United Kingdom  Total_price
+0         6          2    1     12    10                        0  ...       0         0      0            0               1           12
+1         6          3    1     12    10                        0  ...       0         0      0            0               1           18
+2         6          3    1     12    10                        0  ...       0         0      0            0               1           18
+
+[3 rows x 219 columns]
+[2023-05-24 22:00:46,776] root - INFO - .......base_df shape ...(202341, 219)
+[2023-05-24 22:00:46,776] root - INFO - .......train_df shape ..(202341, 219)
+[2023-05-24 22:00:46,776] root - INFO - .......test_df shape ...(202341, 219)
+[2023-05-24 22:00:46,776] root - INFO - data transformation is almost done.......
+[2023-05-24 22:00:46,776] root - INFO - saving transformed data into data_transformation artifacts
+[2023-05-24 22:00:49,915] root - INFO - saved transfomred base_df into data_transformation artifacts 
+[2023-05-24 22:00:53,120] root - INFO - saved transfomred train_df into data_transformation artifacts 
+[2023-05-24 22:00:56,693] root - INFO - saved transfomred test_df into data_transformation artifacts 
+[2023-05-24 22:00:56,693] root - INFO - base_df shape is : (202341, 219)
+[2023-05-24 22:00:56,693] root - INFO - returning data transformatin artifact
+[2023-05-24 22:00:56,700] root - INFO - Reading traina nd test data from data_transformation artifacts...
+[2023-05-24 22:00:57,766] root - INFO - Splitting data into input and output features (x,y)...
+[2023-05-24 22:00:57,839] root - INFO - splitting train and test data into x_train, x_test and y_train, y_test ...
+[2023-05-24 22:00:58,483] root - INFO - X_train shape is : (151755, 218)
+[2023-05-24 22:00:58,483] root - INFO - x_test shape is : (50586, 218)
+[2023-05-24 22:00:58,483] root - INFO - ready to fit tdata to model...
+[2023-05-24 22:01:05,394] root - INFO - data fitted to model...
+[2023-05-24 22:01:05,394] root - INFO - predict for x_test...
+[2023-05-24 22:01:05,440] root - INFO - predicted for x_test : 0.5720339514042361
+[2023-05-24 22:01:05,440] root - INFO - predict for x_train...
+[2023-05-24 22:01:05,731] root - INFO - predicted for x_train : 0.5965300251073065
+[2023-05-24 22:01:05,732] root - INFO - calculating absolute diff between r2_train_score and r2_test_score, :  0.024496073703070387
+[2023-05-24 22:01:05,732] root - INFO - observing model performance whether is underfitted or overfitted...

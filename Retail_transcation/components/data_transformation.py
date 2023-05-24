@@ -127,10 +127,10 @@ class DataTransformation:
             base_df = pd.read_csv(self.data_validation_artifacts.valid_feature_store_path)
 
             logging.info('reading data from valid_train_file.....')
-            train_df = pd.read_csv(self.data_validation_artifacts.valid_train_file_path)
+            train_df = pd.read_csv(self.data_validation_artifacts.valid_feature_store_path)
 
             logging.info('reading data from valid_test_file.....')
-            test_df = pd.read_csv(self.data_validation_artifacts.valid_test_file_path)
+            test_df = pd.read_csv(self.data_validation_artifacts.valid_feature_store_path)
 
 
             # handling INvoiceDate:
@@ -211,6 +211,9 @@ class DataTransformation:
 
             test_df.to_csv(path_or_buf=self.data_transformation_config.transform_test_file_path, index=False, header=True)
             logging.info("saved transfomred test_df into data_transformation artifacts ")
+
+
+            logging.info(f"base_df shape is : {base_df.shape}")
 
 
 

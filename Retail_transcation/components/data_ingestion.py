@@ -22,9 +22,9 @@ class DataIngestion:
 
             logging.info("Starting data ingestion")
 
-
-            df=pd.DataFrame = utils.get_as_df(database_name=self.data_ingestion_config.database_name,
-                                            collection_name=self.data_ingestion_config.collection_name)
+            df = pd.read_csv("/home/vinod/projects/retail_transaction_pred/Online_Retail.csv")
+            #df=pd.DataFrame = utils.get_as_df(database_name=self.data_ingestion_config.database_name,
+            #                                collection_name=self.data_ingestion_config.collection_name)
             #database_name=self.data_ingestion_config.database_name
             #collection_name=self.data_ingestion_config.collection_name
             logging.info("got data from mongodb")

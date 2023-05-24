@@ -7,6 +7,10 @@ from Retail_transcation.logger import logging
 FILE_NAME = "/home/vinod/projects/retail_transaction_pred/Online Retail.csv"
 TRAIN_FILE_NAME = "train.csv"
 TEST_FILE_NAME = "test.csv"
+TRANSFORMATION_BASE_FILE_NAME = "transformed_base_df.csv"
+TRANSFORMATION_TRAIN_FILE_NAME = "transformed_train_df.csv"
+TRANSFORMATION_TEST_FILE_NAME = "transformed_test_df.csv"
+MODEL_FILE_NAME = "model.pkl"
 
 
 class TrainingPipelineConfig:
@@ -83,9 +87,9 @@ class DataTransformationConfig:
             data_split_dir = os.path.join(self.data_transformation_dir, "data_split")
             os.makedirs(data_split_dir, exist_ok=True)  # Create the data_split directory if it doesn't exist
 
-            self.transform_feature_store_path = os.path.join(feature_store_dir, "transform_base.csv")
-            self.transform_train_file_path = os.path.join(data_split_dir, "transform_train.csv")
-            self.transform_test_file_path = os.path.join(data_split_dir, "transform_test.csv")
+            self.transform_feature_store_path = os.path.join(feature_store_dir, TRANSFORMATION_BASE_FILE_NAME)
+            self.transform_train_file_path = os.path.join(data_split_dir, TRANSFORMATION_TRAIN_FILE_NAME)
+            self.transform_test_file_path = os.path.join(data_split_dir, TRANSFORMATION_TEST_FILE_NAME)
 
         except Exception as e:
             raise RetailException(e,sys)
@@ -99,12 +103,25 @@ class ModeTrainerConfig:
             self.model_trainer_dir = os.path.join(training_pipeline_config.artifact_dir,"model_trainer")
             os.makedirs(self.model_trainer_dir, exist_ok=True)
 
-            self.model_dir = os.path.join(self.model_path, "model")
-            os.makedirs(self.model_dir, exist_ok=True)
-            self.model_path = os.path.join(self.model_dir,"model.pkl")
+            model_dir = os.path.join(self.model_trainer_dir, "model")
+            os.makedirs(model_dir, exist_ok=True)
+
+            self.model_path = os.path.join(model_dir,MODEL_FILE_NAME)
 
             self.expected_r2_score = 0.75
             self.overfitting_value = 0.3
+
+        except Exception as e:
+            raise RetailException(e,sys)
+        
+
+
+class ModeEvaluationConfig:
+
+    def __init__(self, training_pipeline_config:TrainingPipelineConfig):
+        try:
+
+            self.change_overfitting_value = 0.01
 
         except Exception as e:
             raise RetailException(e,sys)
