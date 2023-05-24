@@ -33,7 +33,7 @@ class ModelResolver:
     def get_latest_dir_path(self):
         try:
             
-            dir_name=os.path.listdir(self.model_registry)
+            dir_name=os.listdir(self.model_registry)
             if len(dir_name)==0:
                 return None
             

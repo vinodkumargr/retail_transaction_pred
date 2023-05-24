@@ -187,11 +187,6 @@ class DataTransformation:
             logging.info("handled target column .......")
 
 
-            logging.info(f"base_df.head : {base_df.head(3)}")
-            logging.info(f"train_df.head : {train_df.head(3)}")
-            logging.info(f"test_df.head : {test_df.head(3)}")
-
-
             logging.info (f".......base_df shape ...{base_df.shape}")
             logging.info (f".......train_df shape ..{train_df.shape}")
             logging.info (f".......test_df shape ...{test_df.shape}")

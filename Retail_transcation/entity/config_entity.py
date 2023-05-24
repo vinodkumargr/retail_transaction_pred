@@ -107,6 +107,7 @@ class ModeTrainerConfig:
             os.makedirs(model_dir, exist_ok=True)
 
             self.model_path = os.path.join(model_dir,MODEL_FILE_NAME)
+            self.data_path = os.path.join(model_dir, "data.pkl")
 
             self.expected_r2_score = 0.5
             self.overfitting_value = 0.3

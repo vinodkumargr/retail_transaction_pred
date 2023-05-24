@@ -5,12 +5,12 @@ from Retail_transcation.components.data_validation import DataValidation
 from Retail_transcation.components.data_transformation import DataTransformation
 from Retail_transcation import config, utils
 from Retail_transcation.entity import config_entity, artifacts_entity
-import os, sys, re
+import os, sys
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
-from sklearn.metrics import r2_score
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 from sklearn.tree import DecisionTreeRegressor
 
 
@@ -28,12 +28,12 @@ class ModelTrainer:
             raise RetailException(e, sys)
         
 
-    def linear_regression_algorith(self, x_train, y_train):
+    def decision_tree_algorith(self, x_train, y_train):
         try:
 
-            lr = LinearRegression()
-            lr.fit(x_train, y_train)
-            return lr
+            dtr = DecisionTreeRegressor()
+            dtr.fit(x_train, y_train)
+            return dtr
 
         except Exception as e:
             raise RetailException(e, sys)
@@ -50,11 +50,6 @@ class ModelTrainer:
             y = df['Total_price']
 
 
-            for i in x.columns:
-                if i == "Total_price":
-                    logging.info(f"output column is present in x : {i}")
-            
-
             logging.info("splitting train and test data into x_train, x_test and y_train, y_test ...")
 
             x_train, x_test, y_train, y_test = train_test_split(x, y, random_state=22)
@@ -63,19 +58,48 @@ class ModelTrainer:
             logging.info(f"x_test shape is : {x_test.shape}")
 
             logging.info("ready to fit tdata to model...")
-            model = self.linear_regression_algorith(x_train=x_train, y_train=y_train)
+            model = self.decision_tree_algorith(x_train=x_train, y_train=y_train)
             logging.info("data fitted to model...")
 
-            logging.info("predict for x_test...")
-            y_pred_test = model.predict(x_test)
-            r2_test_score = r2_score(y_true=y_test, y_pred=y_pred_test)
+
+            # r2 score
+            ry_pred_test = model.predict(x_test)
+            r2_test_score = r2_score(y_true=y_test, y_pred=ry_pred_test)
             logging.info(f"predicted for x_test : {r2_test_score}")
 
-
-            logging.info("predict for x_train...")
-            y_pred_train = model.predict(x_train)
-            r2_train_score = r2_score(y_true=y_train, y_pred=y_pred_train)
+            ry_pred_train = model.predict(x_train)
+            r2_train_score = r2_score(y_true=y_train, y_pred=ry_pred_train)
             logging.info(f"predicted for x_train : {r2_train_score}")
+
+
+#           mse
+            msy_pred_train = model.predict(x_train)
+            mse_train_score = mean_squared_error(y_true=y_train, y_pred=msy_pred_train)
+            logging.info(f"predicted mse for x_train : {mse_train_score}")
+
+            msy_pred_test = model.predict(x_test)
+            mse_test_score = mean_squared_error(y_true=y_test, y_pred=msy_pred_test)
+            logging.info(f"predicted mse for x_test : {mse_test_score}")
+
+            # mae
+            may_pred_train = model.predict(x_train)
+            mae_train_score = mean_absolute_error(y_true=y_train, y_pred=may_pred_train)
+            logging.info(f"predicted for mae x_train : {mae_train_score}")
+
+            may_pred_test = model.predict(x_test)
+            mae_test_score = mean_absolute_error(y_true=y_test, y_pred=may_pred_test)
+            logging.info(f"predicted for  mae x_test : {mae_test_score}")
+
+
+            # rmse
+            rmy_pred_train = model.predict(x_train)
+            rm_train_score = np.sqrt(mse_train_score)
+            logging.info(f"predicted rmse for x_train : {rm_train_score}")
+
+            rmy_pred_test = model.predict(x_test)
+            rmy_test_score = np.sqrt(mse_test_score)
+            logging.info(f"predicted for x_test : {rmy_test_score}")
+
 
             
             diff=abs(r2_train_score - r2_test_score)
