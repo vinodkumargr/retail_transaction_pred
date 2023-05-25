@@ -1,0 +1,85 @@
+[2023-05-25 08:56:21,939] root - INFO - printing dict data : {'database_name': 'online_retail', 'collection_name': 'online_retail', 'data_ingestion_dir': '/home/vinod/projects/retail_transaction_pred/artifacts/data_ingestion', 'feature_store_path': '/home/vinod/projects/retail_transaction_pred/Online Retail.csv'}
+[2023-05-25 08:56:21,939] root - INFO - Starting data ingestion
+[2023-05-25 08:56:22,401] root - INFO - got data from mongodb
+[2023-05-25 08:56:22,401] root - INFO - creating feature store dir
+[2023-05-25 08:56:22,401] root - INFO - storing into feature store dir
+[2023-05-25 08:56:23,974] root - INFO - data validation started........
+[2023-05-25 08:56:24,368] root - INFO - dropping null values in base_df, axsi-0 and df shape is : (541909, 8)
+[2023-05-25 08:56:24,556] root - INFO - now shape of df : (540455, 8)
+[2023-05-25 08:56:24,556] root - INFO - columns : Index(['InvoiceNo', 'StockCode', 'Description', 'Quantity', 'InvoiceDate',
+       'UnitPrice', 'CustomerID', 'Country'],
+      dtype='object')
+[2023-05-25 08:56:24,560] root - INFO - ____________________dropping unwanted cols, axis=1_________________________
+[2023-05-25 08:56:24,560] root - INFO - dropping null values in base_df, axsi-0 and df shape is : (540455, 8)
+[2023-05-25 08:56:24,560] root - INFO - found unwanted columns: ['InvoiceNo', 'StockCode', 'CustomerID']
+[2023-05-25 08:56:24,569] root - INFO - dropped unwanted columns: ['InvoiceNo', 'StockCode', 'CustomerID']
+[2023-05-25 08:56:24,569] root - INFO - data shape: (540455, 5)
+[2023-05-25 08:56:24,574] root - INFO - ____________________dropping rows on condition(outliers), axis=1_________________________
+[2023-05-25 08:56:24,574] root - INFO - dropping rows on condition in base_df and df shape is : (540455, 5)
+[2023-05-25 08:56:24,866] root - INFO - dropped null values in base_df
+[2023-05-25 08:56:24,866] root - INFO - Writting reprt in yaml file
+[2023-05-25 08:56:24,866] root - INFO - report written into report.yaml
+[2023-05-25 08:56:24,866] root - INFO - storing validation base_df into data validation artifacts
+[2023-05-25 08:56:25,158] root - INFO - data validation is almost done
+[2023-05-25 08:56:25,159] root - INFO - returning data_validation_artifact
+[2023-05-25 08:56:25,161] root - INFO - ...................Starting data transfomration ..................
+[2023-05-25 08:56:25,161] root - INFO - reading data from valid_feature_store_file...
+[2023-05-25 08:56:25,261] root - INFO - handling InvoiceDate column in base_df
+[2023-05-25 08:56:25,271] root - INFO - df[InvoiceDate] dtype != datetime, converting into datetime in                                 Description  Quantity          InvoiceDate  UnitPrice         Country
+0        WHITE HANGING HEART T-LIGHT HOLDER         6  2010-12-01 08:26:00          2  United Kingdom
+1                       WHITE METAL LANTERN         6  2010-12-01 08:26:00          3  United Kingdom
+2       KNITTED UNION FLAG HOT WATER BOTTLE         6  2010-12-01 08:26:00          3  United Kingdom
+3            RED WOOLLY HOTTIE WHITE HEART.         6  2010-12-01 08:26:00          3  United Kingdom
+4              SET 7 BABUSHKA NESTING BOXES         2  2010-12-01 08:26:00          7  United Kingdom
+...                                     ...       ...                  ...        ...             ...
+202336           ALARM CLOCK BAKELIKE IVORY         4  2011-12-09 12:50:00          3          France
+202337      CHILDRENS APRON SPACEBOY DESIGN         8  2011-12-09 12:50:00          1          France
+202338                   SPACEBOY LUNCH BOX        12  2011-12-09 12:50:00          1          France
+202339           CHILDRENS CUTLERY SPACEBOY         4  2011-12-09 12:50:00          4          France
+202340         BAKING SET 9 PIECE RETROSPOT         3  2011-12-09 12:50:00          4          France
+
+[202341 rows x 5 columns]
+[2023-05-25 08:56:25,323] root - INFO - Created new columns Day, Month and year and dropped column InvoiceDate in                                 Description  Quantity  UnitPrice         Country  Day  Month  Year
+0        WHITE HANGING HEART T-LIGHT HOLDER         6          2  United Kingdom    1     12    10
+1                       WHITE METAL LANTERN         6          3  United Kingdom    1     12    10
+2       KNITTED UNION FLAG HOT WATER BOTTLE         6          3  United Kingdom    1     12    10
+3            RED WOOLLY HOTTIE WHITE HEART.         6          3  United Kingdom    1     12    10
+4              SET 7 BABUSHKA NESTING BOXES         2          7  United Kingdom    1     12    10
+...                                     ...       ...        ...             ...  ...    ...   ...
+202336           ALARM CLOCK BAKELIKE IVORY         4          3          France    9     12    11
+202337      CHILDRENS APRON SPACEBOY DESIGN         8          1          France    9     12    11
+202338                   SPACEBOY LUNCH BOX        12          1          France    9     12    11
+202339           CHILDRENS CUTLERY SPACEBOY         4          4          France    9     12    11
+202340         BAKING SET 9 PIECE RETROSPOT         3          4          France    9     12    11
+
+[202341 rows x 7 columns]
+[2023-05-25 08:56:25,326] root - INFO - .simple imputer in base_df..
+[2023-05-25 08:56:25,342] root - INFO - .........encoding objects column in base_df...........
+[2023-05-25 08:56:25,840] root - INFO - .........converting column.dtypes into int in base_df...........
+[2023-05-25 08:56:25,844] root - INFO -  ....... creating target columns .............
+[2023-05-25 08:56:25,845] root - INFO - .......base_df shape ...(202341, 219)
+[2023-05-25 08:56:25,845] root - INFO - data transformation is almost done.......
+[2023-05-25 08:56:25,845] root - INFO - saving transformed data into data_transformation artifacts
+[2023-05-25 08:56:29,185] root - INFO - saved transfomred base_df into data_transformation artifacts 
+[2023-05-25 08:56:29,185] root - INFO - splitting data into train and test.....: 
+[2023-05-25 08:56:29,406] root - INFO - base_df shape is : (202341, 219)
+[2023-05-25 08:56:32,610] root - INFO - returning data transformatin artifact
+[2023-05-25 08:56:32,611] root - INFO - Reading traina nd test data from data_transformation artifacts...
+[2023-05-25 08:56:33,681] root - INFO - Splitting data into input and output features (x,y)...
+[2023-05-25 08:56:33,752] root - INFO - splitting train and test data into x_train, x_test and y_train, y_test ...
+[2023-05-25 08:56:33,975] root - INFO - X_train shape is : (151755, 218)
+[2023-05-25 08:56:33,975] root - INFO - x_test shape is : (50586, 218)
+[2023-05-25 08:56:33,975] root - INFO - ready to fit tdata to model...
+[2023-05-25 08:56:34,933] root - INFO - data fitted to model...
+[2023-05-25 08:56:34,952] root - INFO - predicted for x_test : 0.9963792644230265
+[2023-05-25 08:56:35,018] root - INFO - predicted for x_train : 1.0
+[2023-05-25 08:56:35,084] root - INFO - predicted mse for x_train : 0.0
+[2023-05-25 08:56:35,102] root - INFO - predicted mse for x_test : 1.6123037994702092
+[2023-05-25 08:56:35,168] root - INFO - predicted for mae x_train : 0.0
+[2023-05-25 08:56:35,187] root - INFO - predicted for  mae x_test : 0.03194559759617285
+[2023-05-25 08:56:35,252] root - INFO - predicted rmse for x_train : 0.0
+[2023-05-25 08:56:35,270] root - INFO - predicted for x_test : 1.2697652536867627
+[2023-05-25 08:56:35,270] root - INFO - calculating absolute diff between r2_train_score and r2_test_score, :  0.0036207355769735106
+[2023-05-25 08:56:35,270] root - INFO - observing model performance whether is underfitted or overfitted...
+[2023-05-25 08:56:35,270] root - INFO - save the model as a dill(pickle) file....
+[2023-05-25 08:56:35,274] root - INFO - model_evaluation_artifact : ModelEvaluationArtifact(model_eccepted=True, improved_accuracy=None)

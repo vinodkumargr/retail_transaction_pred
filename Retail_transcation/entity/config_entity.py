@@ -5,8 +5,7 @@ from Retail_transcation.logger import logging
 
 
 FILE_NAME = "/home/vinod/projects/retail_transaction_pred/Online Retail.csv"
-TRAIN_FILE_NAME = "train.csv"
-TEST_FILE_NAME = "test.csv"
+VALIDATION_FEATURE_PATH = "validation_base.csv"
 TRANSFORMATION_BASE_FILE_NAME = "transformed_base_df.csv"
 TRANSFORMATION_TRAIN_FILE_NAME = "transformed_train_df.csv"
 TRANSFORMATION_TEST_FILE_NAME = "transformed_test_df.csv"
@@ -31,9 +30,6 @@ class DataIngestionConfig:
             self.collection_name="online_retail"
             self.data_ingestion_dir = os.path.join(training_pipeline_config.artifact_dir, "data_ingestion")
             self.feature_store_path = os.path.join(self.data_ingestion_dir, "feature_store", FILE_NAME)
-            self.train_file_path = os.path.join(self.data_ingestion_dir,"data_split", TRAIN_FILE_NAME)
-            self.test_file_path = os.path.join(self.data_ingestion_dir, "data_split", TEST_FILE_NAME)
-
         except Exception as e:
             raise RetailException(e,sys)
         
@@ -57,13 +53,9 @@ class DataValidationConfig:
             os.makedirs(self.data_validation_dir, exist_ok=True)  # Create the data_validation directory if it doesn't exist
 
             feature_store_dir = os.path.join(self.data_validation_dir, "feature_store")
-            os.makedirs(feature_store_dir, exist_ok=True)  # Create the feature_store directory if it doesn't exist
-            data_split_dir = os.path.join(self.data_validation_dir, "data_split")
-            os.makedirs(data_split_dir, exist_ok=True)  # Create the data_split directory if it doesn't exist
+            os.makedirs(feature_store_dir, exist_ok=True)  
 
-            self.valid_feature_store_path = os.path.join(feature_store_dir, "validation_base.csv")
-            self.valid_train_file_path = os.path.join(data_split_dir, "validation_train.csv")
-            self.valid_test_file_path = os.path.join(data_split_dir, "validatin_test.csv")
+            self.valid_feature_store_path = os.path.join(feature_store_dir, VALIDATION_FEATURE_PATH)
             self.report_file_path = os.path.join(self.data_validation_dir, "report.yaml")
 
             self.base_file_path = os.path.join(FILE_NAME)
@@ -83,13 +75,14 @@ class DataTransformationConfig:
             os.makedirs(self.data_transformation_dir, exist_ok=True)  # Create the data_validation directory if it doesn't exist
 
             feature_store_dir = os.path.join(self.data_transformation_dir, "feature_store")
-            os.makedirs(feature_store_dir, exist_ok=True)  # Create the feature_store directory if it doesn't exist
-            data_split_dir = os.path.join(self.data_transformation_dir, "data_split")
-            os.makedirs(data_split_dir, exist_ok=True)  # Create the data_split directory if it doesn't exist
+            os.makedirs(feature_store_dir, exist_ok=True)
+
+            self.data_split_dir = os.path.join(self.data_transformation_dir, "train_and_test")
+            os.makedirs(self.data_split_dir, exist_ok=True)
 
             self.transform_feature_store_path = os.path.join(feature_store_dir, TRANSFORMATION_BASE_FILE_NAME)
-            self.transform_train_file_path = os.path.join(data_split_dir, TRANSFORMATION_TRAIN_FILE_NAME)
-            self.transform_test_file_path = os.path.join(data_split_dir, TRANSFORMATION_TEST_FILE_NAME)
+            self.transform_train_path = os.path.join(self.data_split_dir,TRANSFORMATION_TRAIN_FILE_NAME)
+            self.transform_test_path = os.path.join(self.data_split_dir, TRANSFORMATION_TEST_FILE_NAME)
 
         except Exception as e:
             raise RetailException(e,sys)

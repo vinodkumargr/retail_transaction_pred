@@ -47,6 +47,5 @@ class ModelEvaluation:
 
             return model_evaluation_artifact
 
-
         except Exception as e:
             raise RetailException(e, sys)
