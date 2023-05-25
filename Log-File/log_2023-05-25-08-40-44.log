@@ -1,6 +1,0 @@
-[2023-05-25 08:40:57,599] root - INFO - printing dict data : {'database_name': 'online_retail', 'collection_name': 'online_retail', 'data_ingestion_dir': '/home/vinod/projects/retail_transaction_pred/artifacts/data_ingestion', 'feature_store_path': '/home/vinod/projects/retail_transaction_pred/Online Retail.csv'}
-[2023-05-25 08:40:57,599] root - INFO - Starting data ingestion
-[2023-05-25 08:40:58,327] root - INFO - got data from mongodb
-[2023-05-25 08:40:58,327] root - INFO - creating feature store dir
-[2023-05-25 08:40:58,327] root - INFO - storing into feature store dir
-[2023-05-25 08:41:00,158] root - INFO - create dataset_dir if not exist
