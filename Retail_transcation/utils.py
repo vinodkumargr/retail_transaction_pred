@@ -57,3 +57,14 @@ def save_object(file_path: str, obj: object) -> None:
     except Exception as e:
         raise RetailException(e, sys)
     
+
+def load_object(file_path:str)->object:
+    try:
+        if not os.path.exists(file_path):
+            raise Exception(f"file path : {file_path} not exists...")
+        with open(file_path , "rb") as objread:
+            return dill.load(objread)
+        
+    except Exception as e:
+        raise RetailException(e, sys)
+    

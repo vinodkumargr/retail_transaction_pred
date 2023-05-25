@@ -4,7 +4,7 @@ from Retail_transcation.components.data_ingestion import DataIngestion
 from Retail_transcation.components.data_validation import DataValidation
 from Retail_transcation import config
 from Retail_transcation.entity import config_entity, artifacts_entity
-import os, sys, re
+import os, sys, re, pickle
 import pandas as pd
 import numpy as np
 from sklearn.preprocessing import OneHotEncoder
@@ -24,29 +24,6 @@ class DataTransformation:
 
         except Exception as e:
             raise RetailException(e, sys)
-        
-
-    def handle_InvoiceDate(self, df:pd.DataFrame):
-        try:
-            if df['InvoiceDate'].dtype !='datetime':
-                logging.info(f'df[InvoiceDate] dtype != datetime, converting into datetime in {df}')
-                df['InvoiceDate'] = pd.to_datetime(df['InvoiceDate'])
-            else:
-                pass
-
-
-            df['Day']=df['InvoiceDate'].dt.day
-            df['Month']=df['InvoiceDate'].dt.month
-            df['Year']=df['InvoiceDate'].dt.year - 2000
-
-            df = df.drop(['InvoiceDate'],axis=1)
-
-            logging.info(f"Created new columns Day, Month and year and dropped column InvoiceDate in {df}")
-
-            return df
-
-        except Exception as e:
-            raise RetailException(e,sys)
         
 
     def impute_missing_values(self, df:pd.DataFrame):
@@ -70,8 +47,9 @@ class DataTransformation:
             df['Description'] = df['Description'].apply(lambda x: re.sub(r'\d+', '', x))
             categorical_columns = df.select_dtypes(include='object').columns
             encoded_dfs = []
-            top_n_values=200
-                    
+            top_n_values = 100
+            encoder = OneHotEncoder(sparse=False, handle_unknown='ignore')
+
             for column in categorical_columns:
                 # Get the top N most frequent values in the column and convert into list
                 top_values = df[column].value_counts().nlargest(top_n_values).index.tolist()
@@ -79,11 +57,28 @@ class DataTransformation:
                 # Filter the column to include only the top N values
                 filtered_column = df[column].where(df[column].isin(top_values), other='Other')
 
-                encoded_df = pd.get_dummies(filtered_column, drop_first=True, dtype=int, dummy_na=False, prefix='', prefix_sep='')
+                encoded_values = encoder.fit_transform(filtered_column.values.reshape(-1, 1))
+
+                encoded_columns = encoder.get_feature_names([column])
+
+                # Create a DataFrame with the encoded values
+                encoded_df = pd.DataFrame(encoded_values, columns=encoded_columns)
+
                 encoded_dfs.append(encoded_df)
-                        
+
             f_df = pd.concat([df.drop(categorical_columns, axis=1)] + encoded_dfs, axis=1)
+
+
+            encoder_file_path = "/home/vinod/projects/retail_transaction_pred/encoder.pkl"
+            os.makedirs(os.path.dirname(encoder_file_path), exist_ok=True)
+            # Save the encoder as a pickle file
+            with open(encoder_file_path, "wb") as f:
+                pickle.dump(encoder, f)
+                
+
             return f_df
+        
+        
 
         except Exception as e:
             raise RetailException(e, sys)
@@ -124,11 +119,6 @@ class DataTransformation:
 
             logging.info("reading data from valid_feature_store_file...")
             base_df = pd.read_csv(self.data_validation_artifacts.valid_feature_store_path)
-
-
-            # handling INvoiceDate:
-            logging.info("handling InvoiceDate column in base_df")
-            base_df=self.handle_InvoiceDate(df = base_df)
 
 
             # simple imputer

@@ -120,6 +120,10 @@ class ModelTrainer:
             utils.save_object(file_path=self.model_trainer_config.model_path, 
                                 obj=model)
             
+            model_data = pd.read_csv("/home/vinod/projects/retail_transaction_pred/artifacts/data_validation/feature_store/validation_base.csv")
+            
+            utils.save_object(file_path=self.model_trainer_config.data_path,
+                              obj=model_data)
             
             model_trainer_artifacts = artifacts_entity.ModelTrainerArtifact(
                 model_path=self.model_trainer_config.model_path,

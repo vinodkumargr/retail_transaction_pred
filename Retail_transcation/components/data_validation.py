@@ -105,6 +105,30 @@ class DataValidation:
 
         except Exception as e:
             raise RetailException(e,sys)
+        
+
+
+    def handle_InvoiceDate(self, df:pd.DataFrame):
+        try:
+            if df['InvoiceDate'].dtype !='datetime':
+                logging.info(f'df[InvoiceDate] dtype != datetime, converting into datetime in {df}')
+                df['InvoiceDate'] = pd.to_datetime(df['InvoiceDate'])
+            else:
+                pass
+
+
+            df['Day']=df['InvoiceDate'].dt.day
+            df['Month']=df['InvoiceDate'].dt.month
+            df['Year']=df['InvoiceDate'].dt.year - 2000
+
+            df = df.drop(['InvoiceDate'],axis=1)
+
+            logging.info(f"Created new columns Day, Month and year and dropped column InvoiceDate in {df}")
+
+            return df
+
+        except Exception as e:
+            raise RetailException(e,sys)
 
         
 
@@ -130,6 +154,11 @@ class DataValidation:
             logging.info(f"dropping rows on condition in base_df and df shape is : {base_df.shape}")
             base_df=self.drop_rows_on_condition(df=base_df)
             logging.info("dropped null values in base_df")
+
+
+            # handling INvoiceDate:
+            logging.info("handling InvoiceDate column in base_df")
+            base_df=self.handle_InvoiceDate(df = base_df)
 
             
             logging.info("Writting reprt in yaml file")
