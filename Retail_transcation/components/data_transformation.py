@@ -10,8 +10,7 @@ import numpy as np
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.feature_extraction import FeatureHasher
 from sklearn.impute import SimpleImputer
-import random
-
+from sklearn.model_selection import train_test_split
 
 
 class DataTransformation:
@@ -126,70 +125,33 @@ class DataTransformation:
             logging.info("reading data from valid_feature_store_file...")
             base_df = pd.read_csv(self.data_validation_artifacts.valid_feature_store_path)
 
-            logging.info('reading data from valid_train_file.....')
-            train_df = pd.read_csv(self.data_validation_artifacts.valid_feature_store_path)
-
-            logging.info('reading data from valid_test_file.....')
-            test_df = pd.read_csv(self.data_validation_artifacts.valid_feature_store_path)
-
 
             # handling INvoiceDate:
             logging.info("handling InvoiceDate column in base_df")
             base_df=self.handle_InvoiceDate(df = base_df)
-
-            logging.info("handling InvoiceDate in train and test data")
-            train_df=self.handle_InvoiceDate(df=train_df)
-            test_df=self.handle_InvoiceDate(df=test_df)
-            logging.info("handled InvoiceDate.......")
-
 
 
             # simple imputer
             logging.info(".simple imputer in base_df..")
             base_df=self.impute_missing_values(df=base_df)
 
-            logging.info("handling simple imputer in train and test data")
-            train_df=self.impute_missing_values(df=train_df)
-            test_df=self.impute_missing_values(df=test_df)
-            logging.info("handled simple imputer.......")
-
-
 
             # encode onject columns:
             logging.info(".........encoding objects column in base_df...........")
             base_df=self.encode_object_columns(df=base_df)
-
-            logging.info("handling encoding in train and test data")
-            train_df=self.encode_object_columns(df=train_df)
-            test_df=self.encode_object_columns(df=test_df)
-            logging.info("handled encoding.......")
-
 
 
             #converting data-types into int
             logging.info(".........converting column.dtypes into int in base_df...........")
             base_df=self.convert_dtypes_into_int(df=base_df)
 
-            logging.info("converting column.dtypes into int in train and test data")
-            train_df=self.convert_dtypes_into_int(df=train_df)
-            test_df=self.convert_dtypes_into_int(df=test_df)
-            logging.info("converted column.dtypes into int.......")
-
-
 
             # creating target column:
             logging.info(" ....... creating target columns .............")
             base_df=self.create_target_column(df=base_df)
 
-            logging.info("handling target column in train and test data")
-            train_df=self.create_target_column(df=train_df)
-            test_df=self.create_target_column(df=test_df)
-            logging.info("handled target column .......")
 
-
-            logging.info (f".......base_df shape ...{base_df.shape}")
-            logging.info (f".......train_df shape ..{train_df.shape}")
-            logging.info (f".......test_df shape ...{test_df.shape}")
+            logging.info (f".......base_df shape ...{base_df.shape}")\
 
 
             logging.info("data transformation is almost done.......")
@@ -201,22 +163,20 @@ class DataTransformation:
             base_df.to_csv(path_or_buf=self.data_transformation_config.transform_feature_store_path, index=False, header=True)
             logging.info("saved transfomred base_df into data_transformation artifacts ")
 
-            train_df.to_csv(path_or_buf=self.data_transformation_config.transform_train_file_path, index=False, header=True)
-            logging.info("saved transfomred train_df into data_transformation artifacts ")
-
-            test_df.to_csv(path_or_buf=self.data_transformation_config.transform_test_file_path, index=False, header=True)
-            logging.info("saved transfomred test_df into data_transformation artifacts ")
-
+            logging.info("splitting data into train and test.....: ")
+            train_df, test_df = train_test_split(base_df, random_state=3)
 
             logging.info(f"base_df shape is : {base_df.shape}")
 
 
+            train_df.to_csv(path_or_buf=self.data_transformation_config.transform_train_path, index=False, header=True)
+            test_df.to_csv(path_or_buf=self.data_transformation_config.transform_test_path, index=False, header=True)
+
 
             data_transformation_Artifact=artifacts_entity.DataTransformationArtifact(
                 transform_feature_store_path=self.data_transformation_config.transform_feature_store_path,
-                transform_train_path=self.data_transformation_config.transform_train_file_path,
-                transform_test_path=self.data_transformation_config.transform_test_file_path
-            )
+                transform_train_path=self.data_transformation_config.transform_train_path,
+                transform_test_path=self.data_transformation_config.transform_test_path)
 
             logging.info("returning data transformatin artifact")
             return data_transformation_Artifact

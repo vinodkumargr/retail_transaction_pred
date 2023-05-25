@@ -42,22 +42,25 @@ class ModelTrainer:
     def initiate_model_trainer(self)-> artifacts_entity.ModelTrainerArtifact:
         try:
 
-            logging.info("Reading traina nd test data from data_transformation artifacts...")
-            df = pd.read_csv(self.data_transformation_artifacts.transform_feature_store_path)
+            logging.info("Reading train and test data from data_transformation artifacts...")
 
-            logging.info("Splitting data into input and output features (x,y)...")
-            x = df.drop(columns = ['Total_price'], axis=1)
-            y = df['Total_price']
+            train_data_path = self.data_transformation_artifacts.transform_train_path
+            test_data_path = self.data_transformation_artifacts.transform_test_path
+
+            train_data = pd.read_csv(train_data_path)
+            test_data = pd.read_csv(test_data_path)
 
 
             logging.info("splitting train and test data into x_train, x_test and y_train, y_test ...")
 
-            x_train, x_test, y_train, y_test = train_test_split(x, y, random_state=22)
+            x_train, y_train = train_data.drop([config.TARGET_COLUMN], axis=1) , train_data[config.TARGET_COLUMN]
+            x_test, y_test = test_data.drop([config.TARGET_COLUMN], axis=1) , test_data[config.TARGET_COLUMN]
+
 
             logging.info(f"X_train shape is : {x_train.shape}")
             logging.info(f"x_test shape is : {x_test.shape}")
 
-            logging.info("ready to fit tdata to model...")
+            logging.info("ready to fit data to model...")
             model = self.decision_tree_algorith(x_train=x_train, y_train=y_train)
             logging.info("data fitted to model...")
 
@@ -122,7 +125,9 @@ class ModelTrainer:
                 model_path=self.model_trainer_config.model_path,
                 r2_train_score=r2_train_score,
                 r2_test_score=r2_test_score)
+            
 
+            return model_trainer_artifacts
 
         except Exception as e:
             raise RetailException(e,sys)
