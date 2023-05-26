@@ -4,3 +4,5 @@
 /.env
 /data_dump.py
 /setup.py
+/artifacts/model_trainer/model/data.pkl
+/artifacts/model_trainer/model/model.pkl
