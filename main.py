@@ -12,6 +12,8 @@ import os, sys
 
 
 
+
+
 if __name__=="__main__":
     try:
         
@@ -64,7 +66,6 @@ if __name__=="__main__":
 
 
 
-<<<<<<< HEAD
         #model pusher:
         model_pusher_config = config_entity.ModelPusherConfig(training_pipeline_config=training_pipeline_config)
         model_pusher = ModelPusher(model_pusher_config=model_pusher_config,
@@ -74,8 +75,6 @@ if __name__=="__main__":
         model_evaluation_artifact = model_pusher.initiate_model_pusher()
 
 
-=======
->>>>>>> dc53585339cb25b80fdb9118610767226ae92f4b
 
     except Exception as e:
         raise RetailException(e, sys)
