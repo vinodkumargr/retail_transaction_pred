@@ -1,16 +1,12 @@
-<<<<<<< HEAD
-=======
+
+
 /artifacts/data_transformation/train_and_test/transformed_train_df.csv
->>>>>>> dc53585339cb25b80fdb9118610767226ae92f4b
 /.github
 /.ipynb_checkpoints
 /.env
 /data_dump.py
 /setup.py
-<<<<<<< HEAD
 *.pkl
 *.csv
-=======
-/artifacts/model_trainer/model/data.pkl
-/artifacts/model_trainer/model/model.pkl
->>>>>>> dc53585339cb25b80fdb9118610767226ae92f4b
+*.npy
+
