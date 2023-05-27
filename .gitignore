@@ -1,6 +1,4 @@
 
-
-/artifacts/data_transformation/train_and_test/transformed_train_df.csv
 /.github
 /.ipynb_checkpoints
 /.env
@@ -9,4 +7,4 @@
 *.pkl
 *.csv
 *.npy
-
+/artifacts/data_transformation/data_split/trans_train.npy
