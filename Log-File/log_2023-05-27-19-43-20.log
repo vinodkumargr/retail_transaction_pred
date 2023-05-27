@@ -1,0 +1,81 @@
+[2023-05-27 19:43:22,265] root - INFO - printing dict data : {'database_name': 'online_retail', 'collection_name': 'online_retail', 'data_ingestion_dir': '/home/vinod/projects/retail_transaction_pred/artifacts/data_ingestion', 'train_path': '/home/vinod/projects/retail_transaction_pred/artifacts/data_ingestion/data_split/train_df.csv', 'test_path': '/home/vinod/projects/retail_transaction_pred/artifacts/data_ingestion/data_split/test_df.csv'}
+[2023-05-27 19:43:22,265] root - INFO - Starting data ingestion
+[2023-05-27 19:43:22,759] root - INFO - got data from mongodb
+[2023-05-27 19:43:22,853] root - INFO - storing train data
+[2023-05-27 19:43:24,211] root - INFO - data validation started........
+[2023-05-27 19:43:24,688] root - INFO - dropping null values
+[2023-05-27 19:43:24,748] root - INFO - now shape of df : (351283, 8)
+[2023-05-27 19:43:24,780] root - INFO - now shape of df : (189172, 8)
+[2023-05-27 19:43:24,782] root - INFO - dropping null values
+[2023-05-27 19:43:24,782] root - INFO - found unwanted columns: ['InvoiceNo', 'StockCode', 'CustomerID']
+[2023-05-27 19:43:24,789] root - INFO - dropped unwanted columns: ['InvoiceNo', 'StockCode', 'CustomerID']
+[2023-05-27 19:43:24,790] root - INFO - data shape: (351283, 5)
+[2023-05-27 19:43:24,796] root - INFO - found unwanted columns: ['InvoiceNo', 'StockCode', 'CustomerID']
+[2023-05-27 19:43:24,801] root - INFO - dropped unwanted columns: ['InvoiceNo', 'StockCode', 'CustomerID']
+[2023-05-27 19:43:24,801] root - INFO - data shape: (189172, 5)
+[2023-05-27 19:43:24,805] root - INFO - dropping rows on condition
+[2023-05-27 19:43:25,044] root - INFO - handling InvoiceDate column
+[2023-05-27 19:43:25,054] root - INFO - df[InvoiceDate] dtype != datetime, converting into datetime in                                Description  Quantity          InvoiceDate  UnitPrice         Country
+0                      DOORMAT NEW ENGLAND         2  2011-04-01 10:11:00          7  United Kingdom
+2            LADIES & GENTLEMEN METAL SIGN         2  2011-09-28 13:07:00          2  United Kingdom
+11                JUMBO STORAGE BAG SKULLS         2  2011-04-04 16:01:00          4  United Kingdom
+14               PAPER CHAIN KIT RETROSPOT         6  2011-03-23 09:54:00          2  United Kingdom
+16       JUMBO SHOPPER VINTAGE RED PAISLEY         1  2011-09-04 11:12:00          2  United Kingdom
+...                                    ...       ...                  ...        ...             ...
+352209  WHITE HANGING HEART T-LIGHT HOLDER         1  2011-01-31 13:19:00          2  United Kingdom
+352215         GIN + TONIC DIET METAL SIGN         2  2011-11-24 11:57:00          2  United Kingdom
+352225             RECYCLING BAG RETROSPOT         1  2011-08-28 12:44:00          2  United Kingdom
+352228     PINK FAIRY CAKE CHILDRENS APRON         8  2011-08-17 14:44:00          1  United Kingdom
+352232    SET OF 3 CAKE TINS PANTRY DESIGN         3  2011-09-28 15:07:00          4  United Kingdom
+
+[86563 rows x 5 columns]
+[2023-05-27 19:43:25,088] root - INFO - Created new columns Day, Month and year and dropped column InvoiceDate
+[2023-05-27 19:43:25,095] root - INFO - df[InvoiceDate] dtype != datetime, converting into datetime in                              Description  Quantity          InvoiceDate  UnitPrice         Country
+9             SET OF 3 REGENCY CAKE TINS         4  2011-08-11 10:14:00         10  United Kingdom
+17          BAKING SET 9 PIECE RETROSPOT         3  2011-04-19 14:36:00          4  United Kingdom
+42            WOODEN FRAME ANTIQUE WHITE         6  2010-12-10 12:29:00          2  United Kingdom
+44       RECIPE BOX PANTRY YELLOW DESIGN         6  2011-12-08 09:20:00          5  United Kingdom
+51      GARDENERS KNEELING PAD KEEP CALM         2  2011-09-22 16:28:00          3  United Kingdom
+...                                  ...       ...                  ...        ...             ...
+189630                RABBIT NIGHT LIGHT         6  2011-05-11 13:23:00          2  United Kingdom
+189631  GARDENERS KNEELING PAD KEEP CALM         1  2011-08-21 14:32:00          1  United Kingdom
+189636               LUNCH BAG CARS BLUE         3  2011-10-07 16:03:00          1  United Kingdom
+189638  GARDENERS KNEELING PAD KEEP CALM         3  2011-08-23 15:24:00          1  United Kingdom
+189667    NATURAL SLATE HEART CHALKBOARD        11  2011-07-12 16:11:00          2  United Kingdom
+
+[18035 rows x 5 columns]
+[2023-05-27 19:43:25,105] root - INFO - Created new columns Day, Month and year and dropped column InvoiceDate
+[2023-05-27 19:43:25,105] root - INFO - converting column.dtypes into int.
+[2023-05-27 19:43:25,106] root - INFO -  ....... creating target columns .............
+[2023-05-27 19:43:25,107] root - INFO - get_required_description 
+[2023-05-27 19:43:25,120] root - INFO - train_Df  shape : (86563, 8)
+[2023-05-27 19:43:25,120] root - INFO - test_df  shape : (18035, 8)
+[2023-05-27 19:43:25,277] root - INFO - Writting reprt in yaml file
+[2023-05-27 19:43:25,277] root - INFO - report written into report.yaml
+[2023-05-27 19:43:25,278] root - INFO - data validation is almost done
+[2023-05-27 19:43:25,278] root - INFO - returning data_validation_artifact
+[2023-05-27 19:43:25,279] root - INFO - ...................Starting data transformation..................
+[2023-05-27 19:43:25,279] root - INFO - reading data from valid_feature_store_file...
+[2023-05-27 19:43:25,761] root - INFO - returning data transformatin artifact
+[2023-05-27 19:43:25,771] root - INFO - Reading train and test data from data_transformation artifacts...
+[2023-05-27 19:43:25,837] root - INFO - splitting train and test data into x_train, x_test and y_train, y_test ...
+[2023-05-27 19:43:25,837] root - INFO - X_train shape is : (86563, 226)
+[2023-05-27 19:43:25,837] root - INFO - x_test shape is : (18035, 226)
+[2023-05-27 19:43:25,837] root - INFO - ready to fit data to model...
+[2023-05-27 19:43:27,275] root - INFO - data fitted to model...
+[2023-05-27 19:43:27,281] root - INFO - predicted for x_test : 0.9954883916175692
+[2023-05-27 19:43:27,338] root - INFO - predicted for x_train : 1.0
+[2023-05-27 19:43:27,405] root - INFO - predicted mse for x_train : 0.0
+[2023-05-27 19:43:27,411] root - INFO - predicted mse for x_test : 3.240144164125312
+[2023-05-27 19:43:27,467] root - INFO - predicted for mae x_train : 0.0
+[2023-05-27 19:43:27,473] root - INFO - predicted for  mae x_test : 0.04957028001108955
+[2023-05-27 19:43:27,541] root - INFO - predicted rmse for x_train : 0.0
+[2023-05-27 19:43:27,547] root - INFO - predicted for x_test : 1.8000400451449161
+[2023-05-27 19:43:27,547] root - INFO - calculating absolute diff between r2_train_score and r2_test_score, :  0.0045116083824308095
+[2023-05-27 19:43:27,547] root - INFO - observing model performance whether is underfitted or overfitted...
+[2023-05-27 19:43:27,547] root - INFO - save the model as a dill(pickle) file....
+[2023-05-27 19:43:27,553] root - INFO - Model evaluation started ......
+[2023-05-27 19:43:27,553] root - INFO - model_evaluation_artifact : ModelEvaluationArtifact(model_eccepted=True, improved_accuracy=None)
+[2023-05-27 19:43:27,554] root - INFO - model pusher is started.....
+[2023-05-27 19:43:27,554] root - INFO - reading(unpickling) transformer and model
+[2023-05-27 19:43:27,555] root - INFO - saving transformer and model file into saved folder...
