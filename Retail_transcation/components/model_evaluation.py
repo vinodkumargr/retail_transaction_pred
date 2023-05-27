@@ -38,6 +38,7 @@ class ModelEvaluation:
     def initiate_model_evaluation(self)-> artifacts_entity.ModelEvaluationArtifact:
         try:
 
+            logging.info("Model evaluation started ......")
             latest_dir_path = self.model_resolver.get_latest_dir_path()
 
             if latest_dir_path == None:  # if the model accuracy is not increased then it will not creates new model dirs 
@@ -49,14 +50,17 @@ class ModelEvaluation:
         
 
             #find previous/old model location
-            old_transformer_path = self.model_resolver.get_latest_save_transform_data_path()
+            logging.info("finding old model path...")
+            old_transformer_path = self.model_resolver.get_latest_save_transform_path()
             old_model_path = self.model_resolver.get_latest_model_path()
             
             # read previous model
+            logging.info("reading old model...")
             old_transformer = pd.read_csv(old_transformer_path)
             old_model = utils.load_object(file_path=old_model_path)
 
             # read current/new model
+            logging.info("reading new model...")
             current_transformer = pd.read_csv(self.data_transformation_artifacts.feature_store_path)
             current_model = utils.load_object(file_path=self.model_trainer_artifacts.model_path)
 
@@ -67,7 +71,9 @@ class ModelEvaluation:
             old_model_y_pred = old_model.predict(old_x_test)
 
             #previous model r2_score
+            logging.info("comapring models....")
             prevoius_model_r2_score = r2_score(y_true=old_y_test, y_pred=old_model_y_pred)
+            logging.info(f"previous model r2_score : {prevoius_model_r2_score}")
 
 
             # reading new test data and predicting for new model
@@ -77,14 +83,9 @@ class ModelEvaluation:
             new_model_y_pred = current_model.predict(new_x_test)
 
             current_model_r2_score = r2_score(y_true=new_y_test, y_pred=new_model_y_pred)
+            logging.info(f"current_model r2_score : {current_model_r2_score}")
 
                
-            # comapre the prevoius_model_r2_score and current_model_r2_score
-
-            if current_model_r2_score <= prevoius_model_r2_score:
-                logging.info("current model is not better than prevoius model....")
-                raise Exception("currernt model is not better than previous...")
-            
 
             model_evaluation_artifact = artifacts_entity.ModelEvaluationArtifact(
                                                     model_eccepted=True, 

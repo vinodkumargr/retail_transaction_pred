@@ -29,17 +29,17 @@ class DataIngestion:
             #collection_name=self.data_ingestion_config.collection_name
             logging.info("got data from mongodb")
 
-            logging.info("creating feature store dir")
-            feature_Store_dir = os.path.dirname(self.data_ingestion_config.feature_store_path)
-            os.makedirs(feature_Store_dir,exist_ok=True)
+            x_train, x_test = train_test_split(df, test_size=0.35)
 
-            logging.info("storing into feature store dir")
-            df.to_csv(path_or_buf = self.data_ingestion_config.feature_store_path, index=False, header=True)
-                        
+            logging.info("storing train data")
+            x_train.to_csv(path_or_buf = self.data_ingestion_config.train_path, index=False, header=True)
+            x_test.to_csv(path_or_buf = self.data_ingestion_config.test_path, index=False, header=True)
+
             
             #preparing artifacts folder:
             data_ingestion_artifact = artifacts_entity.DataIngestionArtifact(
-                feature_store_path=self.data_ingestion_config.feature_store_path)
+                train_data_path=self.data_ingestion_config.train_path,
+                test_data_path=self.data_ingestion_config.test_path)
 
             return data_ingestion_artifact
 

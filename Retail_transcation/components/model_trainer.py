@@ -9,9 +9,12 @@ import os, sys
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import LinearRegression, LogisticRegression
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 from sklearn.tree import DecisionTreeRegressor
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.ensemble import GradientBoostingRegressor
+
 
 
 
@@ -47,15 +50,20 @@ class ModelTrainer:
             train_data_path = self.data_transformation_artifacts.transform_train_path
             test_data_path = self.data_transformation_artifacts.transform_test_path
 
-            train_data = pd.read_csv(train_data_path)
-            test_data = pd.read_csv(test_data_path)
+
+            train_arr = utils.load_numpy_array_data(train_data_path)
+            test_arr = utils.load_numpy_array_data(test_data_path)
 
 
             logging.info("splitting train and test data into x_train, x_test and y_train, y_test ...")
 
-            x_train, y_train = train_data.drop([config.TARGET_COLUMN], axis=1) , train_data[config.TARGET_COLUMN]
-            x_test, y_test = test_data.drop([config.TARGET_COLUMN], axis=1) , test_data[config.TARGET_COLUMN]
+            x_train, y_train = train_arr[:, :-1] , train_arr[:, -1]
+            x_test, y_test = test_arr[:, :-1] , test_arr[:, -1]
 
+            #train_x = train_data.drop(columns=[config.TARGET_COLUMN], axis=1)
+            #train_y = train_data[config.TARGET_COLUMN]
+
+            #x_train, x_test, y_train, y_test = train_test_split(train_x, train_y)
 
             logging.info(f"X_train shape is : {x_train.shape}")
             logging.info(f"x_test shape is : {x_test.shape}")
@@ -120,10 +128,6 @@ class ModelTrainer:
             utils.save_object(file_path=self.model_trainer_config.model_path, 
                                 obj=model)
             
-            model_data = pd.read_csv("/home/vinod/projects/retail_transaction_pred/artifacts/data_validation/feature_store/validation_base.csv")
-            
-            utils.save_object(file_path=self.model_trainer_config.data_path,
-                              obj=model_data)
             
             model_trainer_artifacts = artifacts_entity.ModelTrainerArtifact(
                 model_path=self.model_trainer_config.model_path,

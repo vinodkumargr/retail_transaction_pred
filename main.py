@@ -6,6 +6,7 @@ from Retail_transcation.components.data_validation import DataValidation
 from Retail_transcation.components.data_transformation import DataTransformation
 from Retail_transcation.components.model_trainer import ModelTrainer
 from Retail_transcation.components.model_evaluation import ModelEvaluation
+from Retail_transcation.components.model_pusher import ModelPusher
 from Retail_transcation.entity import config_entity, artifacts_entity
 import os, sys
 
@@ -63,6 +64,15 @@ if __name__=="__main__":
         
         model_evaluation_artifact = model_evaluation.initiate_model_evaluation()
 
+
+
+        #model pusher:
+        model_pusher_config = config_entity.ModelPusherConfig(training_pipeline_config=training_pipeline_config)
+        model_pusher = ModelPusher(model_pusher_config=model_pusher_config,
+                                data_transformation_artifact=data_transformation_artifact,
+                                model_trainer_artifact=model_trainer_artifact)
+        
+        model_evaluation_artifact = model_pusher.initiate_model_pusher()
 
 
 

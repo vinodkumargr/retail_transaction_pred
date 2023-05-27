@@ -17,7 +17,7 @@ import os, sys, re
 class ModelResolver:
 
     def __init__(self, model_registry:str="saved_models",
-                    transformer_dir_name="transformer_data",
+                    transformer_dir_name="transformer",
                     model_dir_name="model"):
         
         try:
@@ -51,7 +51,7 @@ class ModelResolver:
         try:
             
             latest_dir = self.get_latest_dir_path()
-            if latest_dir == None:
+            if latest_dir is None:
                 raise Exception("model is not available....")
             
             return os.path.join(latest_dir, self.model_dir_name, config_entity.MODEL_FILE_NAME)
@@ -62,27 +62,26 @@ class ModelResolver:
 
     def get_latest_transformer_path(self):
         try:
+            latest_dir=self.get_latest_dir_path()
+            if latest_dir is None:
+                raise Exception("transformer is not available....")
             
-            latest_dir=self.get_latest_dir_path
-            if latest_dir == None:
-                raise Exception("transform data is not available....")
-            
-            return os.path.join(latest_dir, self.transformer_dir_name,config_entity.TRANSFORMATION_BASE_FILE_NAME )
+            return os.path.join(latest_dir, self.transformer_dir_name , config_entity.TRANSFORMATION_FILE_NAME )
 
         except Exception as e:
             raise RetailException(e, sys)
         
 
 
-    def get_latest_save_dir_path(self):
+    def get_latest_save_dir_path(self)-> str:
         try:
             
-            latest_dir=self.get_latest_dir_path
-            if latest_dir == None:
-                return os.path.join(self.model_registry,f"{0}")
+            latest_dir=self.get_latest_dir_path()
+            if latest_dir is None:
+                return os.path.join(self.model_registry,f"{1}")
             
             latest_dir_num=int(os.path.basename(self.get_latest_dir_path()))
-            return os.path.join(self.model_registry, f"{latest_dir_num + 1}")
+            return os.path.join(self.model_registry, f"{latest_dir_num}")
 
         except Exception as e:
             raise RetailException(e, sys)
@@ -91,18 +90,21 @@ class ModelResolver:
     def get_latest_save_model_path(self):
         try:
             
-            latest_dir=self.get_latest_save_model_path()
+            latest_dir=self.get_latest_save_dir_path()
             return os.path.join(latest_dir, self.model_dir_name, config_entity.MODEL_FILE_NAME)
 
         except Exception as e:
             raise RetailException(e, sys)
         
 
-    def get_latest_save_transform_data_path(self):
+    def get_latest_save_transform_path(self):
         try:
+
+            latest_dir=self.get_latest_save_dir_path()
+            if latest_dir is None:
+                raise ValueError("No saved model directory found.")
             
-            latest_dir=self.get_latest_dir_path()
-            return os.path.join(latest_dir, self.transformer_dir_name, config_entity.TRANSFORMATION_BASE_FILE_NAME)
+            return os.path.join(latest_dir, self.transformer_dir_name, config_entity.TRANSFORMATION_FILE_NAME)
 
         except Exception as e:
             raise RetailException(e, sys)
