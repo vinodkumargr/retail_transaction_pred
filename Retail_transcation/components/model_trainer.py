@@ -128,6 +128,11 @@ class ModelTrainer:
             utils.save_object(file_path=self.model_trainer_config.model_path, 
                                 obj=model)
             
+            model_path = self.data_transformation_artifacts.transform_feature_store_path
+
+            model_data = pd.read_csv(model_path)
+            utils.save_object(file_path=self.model_trainer_config.data_path,
+                              obj=model_data)
             
             model_trainer_artifacts = artifacts_entity.ModelTrainerArtifact(
                 model_path=self.model_trainer_config.model_path,
