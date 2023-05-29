@@ -1,0 +1,2 @@
+[2023-05-29 10:57:34,549] root - INFO - printing dict data : {'database_name': 'online_retail', 'collection_name': 'online_retail', 'data_ingestion_dir': '/home/vinod/projects1/retail_transaction_pred/artifacts/data_ingestion', 'train_path': '/home/vinod/projects1/retail_transaction_pred/artifacts/data_ingestion/data_split/train_df.csv', 'test_path': '/home/vinod/projects1/retail_transaction_pred/artifacts/data_ingestion/data_split/test_df.csv'}
+[2023-05-29 10:57:34,549] root - INFO - Starting data ingestion

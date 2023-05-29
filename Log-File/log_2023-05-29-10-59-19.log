@@ -1,0 +1,58 @@
+[2023-05-29 10:59:21,136] root - INFO - printing dict data : {'database_name': 'online_retail', 'collection_name': 'online_retail', 'data_ingestion_dir': '/home/vinod/projects1/retail_transaction_pred/artifacts/data_ingestion', 'train_path': '/home/vinod/projects1/retail_transaction_pred/artifacts/data_ingestion/data_split/train_df.csv', 'test_path': '/home/vinod/projects1/retail_transaction_pred/artifacts/data_ingestion/data_split/test_df.csv'}
+[2023-05-29 10:59:21,136] root - INFO - Starting data ingestion
+[2023-05-29 10:59:21,617] root - INFO - got data from mongodb
+[2023-05-29 10:59:21,720] root - INFO - storing train data
+[2023-05-29 10:59:23,047] root - INFO - data validation started........
+[2023-05-29 10:59:23,578] root - INFO - dropping null values
+[2023-05-29 10:59:23,636] root - INFO - now shape of df : (351275, 8)
+[2023-05-29 10:59:23,675] root - INFO - now shape of df : (189180, 8)
+[2023-05-29 10:59:23,677] root - INFO - dropping null values
+[2023-05-29 10:59:23,677] root - INFO - found unwanted columns: ['InvoiceNo', 'StockCode', 'CustomerID']
+[2023-05-29 10:59:23,685] root - INFO - dropped unwanted columns: ['InvoiceNo', 'StockCode', 'CustomerID']
+[2023-05-29 10:59:23,685] root - INFO - data shape: (351275, 5)
+[2023-05-29 10:59:23,691] root - INFO - found unwanted columns: ['InvoiceNo', 'StockCode', 'CustomerID']
+[2023-05-29 10:59:23,695] root - INFO - dropped unwanted columns: ['InvoiceNo', 'StockCode', 'CustomerID']
+[2023-05-29 10:59:23,695] root - INFO - data shape: (189180, 5)
+[2023-05-29 10:59:23,699] root - INFO - dropping rows on condition
+[2023-05-29 10:59:24,072] root - INFO - handling InvoiceDate column
+[2023-05-29 10:59:24,086] root - INFO - df[InvoiceDate] dtype != datetime, converting into datetime in                                Description  Quantity          InvoiceDate  UnitPrice         Country
+4                     HOT BATHS METAL SIGN        12  2011-05-19 16:31:00          2  United Kingdom
+8       DOORMAT FANCY FONT HOME SWEET HOME         2  2011-03-11 13:56:00          7  United Kingdom
+10      SET/3 RED GINGHAM ROSE STORAGE BOX         3  2011-10-09 12:19:00          3  United Kingdom
+17           ASSORTED COLOUR BIRD ORNAMENT        16  2011-08-10 12:44:00          1  United Kingdom
+19                   HEART OF WICKER LARGE         5  2010-12-12 12:18:00          2  United Kingdom
+...                                    ...       ...                  ...        ...             ...
+352211                  SUKI  SHOULDER BAG         2  2011-09-20 14:46:00          4  United Kingdom
+352219             PAPER BUNTING RETROSPOT         6  2011-05-08 14:00:00          2  United Kingdom
+352223        BAKING SET 9 PIECE RETROSPOT         6  2011-10-18 10:58:00          4  United Kingdom
+352226          WOODEN FRAME ANTIQUE WHITE        12  2011-09-28 12:46:00          2  United Kingdom
+352228           LUNCH BAG ALPHABET DESIGN        10  2011-08-19 13:03:00          1  United Kingdom
+
+[84631 rows x 5 columns]
+[2023-05-29 10:59:24,191] root - INFO - Created new columns Day, Month and year and dropped column InvoiceDate
+[2023-05-29 10:59:24,199] root - INFO - df[InvoiceDate] dtype != datetime, converting into datetime in                              Description  Quantity          InvoiceDate  UnitPrice         Country
+14       RECIPE BOX PANTRY YELLOW DESIGN         6  2011-09-27 10:20:00          2  United Kingdom
+23                 HEART OF WICKER LARGE         6  2011-11-01 11:35:00          2  United Kingdom
+28               JUMBO BAG RED RETROSPOT         3  2011-01-14 10:17:00          4  United Kingdom
+38               JUMBO BAG RED RETROSPOT         1  2011-11-18 13:33:00          2  United Kingdom
+70               LUNCH BAG  BLACK SKULL.        10  2011-05-06 13:52:00          1  United Kingdom
+...                                  ...       ...                  ...        ...             ...
+189561     ASSORTED COLOUR BIRD ORNAMENT         8  2011-08-28 13:35:00          1  United Kingdom
+189563    PAPER CHAIN KIT 50'S CHRISTMAS         1  2011-11-17 14:29:00          2  United Kingdom
+189573  SET OF 3 CAKE TINS PANTRY DESIGN         3  2011-08-05 11:46:00          4  United Kingdom
+189584        WOODEN FRAME ANTIQUE WHITE         6  2011-11-28 12:08:00          2  United Kingdom
+189603                RABBIT NIGHT LIGHT         7  2011-11-27 12:52:00          2  United Kingdom
+
+[17523 rows x 5 columns]
+[2023-05-29 10:59:24,209] root - INFO - Created new columns Day, Month and year and dropped column InvoiceDate
+[2023-05-29 10:59:24,209] root - INFO - converting column.dtypes into int.
+[2023-05-29 10:59:24,210] root - INFO -  ....... creating target columns .............
+[2023-05-29 10:59:24,212] root - INFO - get_required_description 
+[2023-05-29 10:59:24,226] root - INFO - train_Df  shape : (84631, 8)
+[2023-05-29 10:59:24,226] root - INFO - test_df  shape : (17523, 8)
+[2023-05-29 10:59:24,422] root - INFO - Writting reprt in yaml file
+[2023-05-29 10:59:24,423] root - INFO - report written into report.yaml
+[2023-05-29 10:59:24,423] root - INFO - data validation is almost done
+[2023-05-29 10:59:24,423] root - INFO - returning data_validation_artifact
+[2023-05-29 10:59:24,424] root - INFO - ...................Starting data transformation..................
+[2023-05-29 10:59:24,425] root - INFO - reading data from valid_feature_store_file...

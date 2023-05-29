@@ -149,7 +149,7 @@ class DataValidation:
         try:
             
             #df['Description'] = df['Description'].apply(lambda x: re.sub(r'\d+', '', x))
-            top_n_values = 200
+            top_n_values = 100
                 # Get the top N most frequent values in the column and convert into list
             top_values = df['Description'].value_counts().nlargest(top_n_values).index.tolist()
 

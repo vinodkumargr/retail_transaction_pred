@@ -26,18 +26,14 @@ class DataTransformation:
             raise RetailException(e, sys)
         
 
-    def get_transform(self):
+    def get_transform(self) -> pd.DataFrame:
         try:
             # Select categorical columns
             categorical_columns = ['Description', 'Country']
 
-            # Initialize the OneHotEncoder
-            encoder = OneHotEncoder(sparse=False, handle_unknown='ignore')
 
             # Create a ColumnTransformer for encoding categorical columns
-            transformer = ColumnTransformer([
-                ('one_hot_encoder', encoder, categorical_columns)
-            ], remainder='passthrough')
+            transformer = pd.get_dummies(df, prefix='', prefix_sep='', dtype=int, drop_first=True)
 
             return transformer
 

@@ -5,18 +5,11 @@ from Retail_transcation.components.data_validation import DataValidation
 from Retail_transcation.components.data_transformation import DataTransformation
 from Retail_transcation.components.model_evaluation import ModelEvaluation
 from Retail_transcation.components.model_trainer import ModelTrainer
-<<<<<<< HEAD
 from Retail_transcation.components.model_pusher import ModelPusher
 from Retail_transcation import config, utils
 from Retail_transcation.entity import config_entity, artifacts_entity
 from Retail_transcation.predictor import ModelResolver
 import os, sys
-=======
-from Retail_transcation import config, utils
-from Retail_transcation.entity import config_entity, artifacts_entity
-from Retail_transcation.predictor import ModelResolver
->>>>>>> dc53585339cb25b80fdb9118610767226ae92f4b
-
 
 
 def StartTrainingPipeline():
@@ -70,8 +63,6 @@ def StartTrainingPipeline():
         model_evaluation_artifact = model_evaluation.initiate_model_evaluation()
 
 
-<<<<<<< HEAD
-
         #model pusher:
         model_pusher_config = config_entity.ModelPusherConfig(training_pipeline_config=training_pipeline_config)
         model_pusher = ModelPusher(model_pusher_config=model_pusher_config,
@@ -81,7 +72,5 @@ def StartTrainingPipeline():
         model_evaluation_artifact = model_pusher.initiate_model_pusher()
 
 
-=======
->>>>>>> dc53585339cb25b80fdb9118610767226ae92f4b
     except Exception as e:
         raise RetailException(e,sys)
