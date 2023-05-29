@@ -3,9 +3,9 @@ import pandas as pd
 import numpy as np
 import pickle as pkl
 
-pickle_data = "/home/vinod/projects1/retail_transaction_pred/artifacts/data_transformation/Pre_process_model/single_pred_data.pkl"
-pickle_model = "/home/vinod/projects1/retail_transaction_pred/artifacts/Model_pusher/saved_models/model.pkl"
-transformer = "/home/vinod/projects1/retail_transaction_pred/artifacts/Model_pusher/saved_models/transformer.pkl"
+pickle_data = "/home/vinod/projects/retail_transaction_pred/artifacts/data_transformation/Pre_process_model/single_pred_data.pkl"
+pickle_model = "/home/vinod/projects/retail_transaction_pred/artifacts/Model_pusher/saved_models/model.pkl"
+transformer = "/home/vinod/projects/retail_transaction_pred/artifacts/Model_pusher/saved_models/transformer.pkl"
 
 
 model = pkl.load(open(pickle_model, 'rb'))

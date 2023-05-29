@@ -80,9 +80,10 @@ def strat_batch_prediction(input_file_path):
 
         transformer = utils.load_object(file_path=model_resolver.get_latest_save_transform_path())
         
-        input_feature_names = list(transformer.get_feature_names_out())
+        #input_feature_names = list(transformer.get_feature_names_out())
+        #input_arr = transformer.transform(data[input_feature_names])
 
-        input_arr = transformer.transform(data[input_feature_names])
+        input_arr = transformer.transform(data)
 
         model = utils.load_object(file_path=model_resolver.get_latest_save_model_path())
         prediction = model.predict(input_arr)

@@ -121,7 +121,7 @@ class ModelTrainer:
                 raise Exception(f"model expected r2_score is : {self.model_trainer_config.expected_r2_score}, but got model r2_score is : {r2_test_score}")
             elif diff > self.model_trainer_config.overfitting_value:
                 raise Exception(f"the absolute diff between train and test r2_score is : {diff} : model is overfitted...")
-            print(f"accuracy is good, no underfitting, no overfitting")
+            print(f"accuracy : {r2_test_score} good, no underfitting, no overfitting")
 
 
             logging.info("save the model as a dill(pickle) file....")
