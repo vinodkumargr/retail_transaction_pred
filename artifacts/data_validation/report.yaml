@@ -1,8 +1,0 @@
-dropping_unwanted_cols_in_test_df:
-- InvoiceNo
-- StockCode
-- CustomerID
-dropping_unwanted_cols_in_train_df:
-- InvoiceNo
-- StockCode
-- CustomerID

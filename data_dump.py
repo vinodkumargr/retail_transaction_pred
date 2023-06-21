@@ -4,9 +4,12 @@ import json
 import os, sys
 from Retail_transcation.exception import RetailException
 from Retail_transcation.logger import logging
+from dotenv import load_dotenv
 
-client = pymongo.MongoClient("mongodb+srv://vinod:vinod@cluster0.f6mhnlm.mongodb.net/?retryWrites=true&w=majority")
+load_dotenv()
+mongodb_url = os.getenv("MONGO_DB_URL")
 
+client = pymongo.MongoClient(mongodb_url)
 DATA_FILE_PATH="/home/vinod/projects/retail_transaction_pred/Online_Retail.csv"
 DATABASE_NAME = "online_retail"
 COLLECTION_NAME = "online_retail"

@@ -1,10 +1,15 @@
+*.egg-info/
+*.egg
+churn.egg-info/
+.ipynb_checkpoints
+.github
+artifacts/
+template.py
 
-/.github
-/.ipynb_checkpoints
-/.env
-/data_dump.py
-/setup.py
-*.pkl
-*.csv
-*.npy
-/artifacts/data_transformation/data_split/trans_train.npy
+
+
+.env
+env/
+price/
+ENV/
+
